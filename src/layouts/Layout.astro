@@ -4,6 +4,12 @@ import Menu from "./Menu.astro";
 // Usar variables de entorno en archivos .astro
 const apiUrl = import.meta.env.PUBLIC_API_URL;
 const siteName = import.meta.env.PUBLIC_SITE_NAME;
+
+interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
 ---
 
 <!doctype html>
@@ -13,12 +19,15 @@ const siteName = import.meta.env.PUBLIC_SITE_NAME;
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="generator" content={Astro.generator} />
-        <title>{siteName}</title>
+        <title>{title}</title>
 
         <link
             href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"
             rel="stylesheet"
         />
+        <script
+            src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"
+        ></script>
         <script
             src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"
         ></script>

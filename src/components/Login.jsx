@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useAuthStore from '../users/store/useAuthStore';
 
-const LoginR = () => {
+const Login = () => {
   // Obtén el estado de la autenticación
   const { isAuthenticated, initializeAuth,login } = useAuthStore();
 
@@ -104,4 +104,4 @@ const LoginR = () => {
   );
 };
 
-export default LoginR;
+export default Login;
