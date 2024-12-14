@@ -35,7 +35,7 @@ export const InputForm: React.FC<Props> = ({ type, name, id, placeholder = " ", 
             >
                 {label}
             </label>
-            {error && <p className="text-red-500 text-sm mt-2">{error.message}</p>} {/* Mostrar el error debajo del input */}
+            {error && <p className="text-red-500 text-sm mt-2">{error.message}</p>}
         </div>
 
     )

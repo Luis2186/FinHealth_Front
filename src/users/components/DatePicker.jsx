@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-const Datepicker= () => {
+const Datepicker= ({register,error}) => {
     const [isClient, setIsClient] = useState(false);
 
     // El código solo se ejecute en el cliente
@@ -44,8 +44,9 @@ const Datepicker= () => {
             type="text"
             className="bg-gray-50 border h-auto border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-indigo-700 dark:border-gray-600 dark:placeholder-blue-200 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Fecha de nacimiento"
-            required
+            {...register("bornDate")}
           />
+           {error && <p className="text-red-500 text-sm mt-2">{error.message}</p>} {/* Mostrar el error debajo del input */}
         </div>
       )
     );

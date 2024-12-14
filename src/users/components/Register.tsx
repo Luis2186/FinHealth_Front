@@ -3,6 +3,8 @@ import useAuthStore from '../store/useAuthStore';
 import Datepicker from './DatePicker';
 import InputForm from './InputForm';
 import { useForm } from "react-hook-form"
+import { zodResolver } from '@hookform/resolvers/zod';
+import { schema } from '../validation/userValidationSchema';
 
 interface IFormInput {
     userName: string;
@@ -25,7 +27,9 @@ const Register = () => {
     const [remember, setRemember] = useState(false);
 
     // Usa useForm con tipos explícitos
-    const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+    const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>({
+        resolver: zodResolver(schema),  // Usamos el resolver de Zod con el esquema importado
+    });
 
     // Función que maneja el envío del formulario
     const onSubmit = (data: IFormInput) => {
@@ -38,12 +42,6 @@ const Register = () => {
         initializeAuth();
     }, [initializeAuth]);
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     // Aquí podrías manejar el inicio de sesión, por ejemplo
-    //     await login(email, password)
-    //     console.log('Iniciar sesión con:', email, password, remember);
-    // };
 
     return (
         <div className="flex w-full h-[calc(100vh-72px)] justify-center items-center gap-5">
@@ -65,19 +63,19 @@ const Register = () => {
             <div className="h-4/5 w-full max-w-xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-indigo-950 dark:border-white-700">
                 <form className="max-w-md mx-auto flex flex-col justify-between h-full" onSubmit={handleSubmit(onSubmit)}>
 
-                    <InputForm type="text" name='userName' id='userName' required label='Nombre de usuario' register={register} validation={{ required: "El campo nombre es obligatorio", minLength: { value: 6, message: "El nombre de usuario debe tener más de 6 caracteres" } }} error={errors.userName} />
-                    <InputForm type="email" name='email' id='email' required label='Correo' error={errors.email} register={register} validation={{ required: "El campo correo es obligatorio" }} />
-                    <InputForm type="password" name='password' id='password' required label='Contraseña' register={register} error={errors.password} validation={{ required: "El campo contraseña es obligatorio" }} />
-                    <InputForm type="password" name='confirmPassword' id='confirmPassword' required label='Confirmar contraseña' register={register} error={errors.confirmPassword} validation={{ required: "El campo confirmar contraseña es obligatorio" }} />
+                    <InputForm type="text" name='userName' id='userName' label='Nombre de usuario' register={register} error={errors.userName} />
+                    <InputForm type="email" name='email' id='email' label='Correo' error={errors.email} register={register} />
+                    <InputForm type="password" name='password' id='password' label='Contraseña' register={register} error={errors.password} />
+                    <InputForm type="password" name='confirmPassword' id='confirmPassword' label='Confirmar contraseña' register={register} error={errors.confirmPassword} />
 
                     <div className="grid md:grid-cols-2 md:gap-6">
-                        <InputForm type="text" name='firstName' id='firstName' required label='Nombres' register={register} error={errors.firstName} validation={{ required: "El campo nombres es obligatorio" }} />
-                        <InputForm type="text" name='lastName' id='lastName' required label='Apellidos' register={register} error={errors.lastName} validation={{ required: "El campo apellidos es obligatorio" }} />
+                        <InputForm type="text" name='firstName' id='firstName' label='Nombres' register={register} error={errors.firstName} />
+                        <InputForm type="text" name='lastName' id='lastName' label='Apellidos' register={register} error={errors.lastName} />
                     </div>
 
                     <div className="grid md:grid-cols-2 md:gap-6">
-                        <InputForm type="tel" name='phone' id='phone' required label='Teléfono' pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" register={register} error={errors.phone} validation={{ required: "El campo teléfono es obligatorio" }} />
-                        <Datepicker />
+                        <InputForm type="tel" name='phone' id='phone' label='Teléfono' pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" register={register} error={errors.phone} />
+                        <Datepicker register={register} error={errors.bornDate} />
                     </div>
 
                     <button type="submit" className="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-md w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 mt-auto">
