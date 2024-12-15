@@ -4,7 +4,8 @@ import Datepicker from './DatePicker';
 import InputForm from './InputForm';
 import { useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
-import { schema } from '../validation/userValidationSchema';
+import { schemaRegister } from '../validation/userValidationSchema';
+import { useAuth } from '../hooks/useAuth';
 
 interface IFormInput {
     userName: string;
@@ -19,23 +20,37 @@ interface IFormInput {
 
 const Register = () => {
     // Obtén el estado de la autenticación
-    const { isAuthenticated, initializeAuth, login } = useAuthStore();
+    const { isAuthenticated, initializeAuth } = useAuthStore();
 
-    // Estado para los campos del formulario
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [remember, setRemember] = useState(false);
+    const { handleRegister, errorMessage, clearErrorMessage } = useAuth();
 
     // Usa useForm con tipos explícitos
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>({
-        resolver: zodResolver(schema),  // Usamos el resolver de Zod con el esquema importado
+        resolver: zodResolver(schemaRegister),  // Usamos el resolver de Zod con el esquema importado
     });
 
-    // Función que maneja el envío del formulario
-    const onSubmit = (data: IFormInput) => {
-        console.log(data); // Aquí puedes hacer lo que quieras con los datos
-    };
 
+    useEffect(() => {
+        clearErrorMessage();
+    }, [])
+
+
+    // Función que maneja el envío del formulario
+    const onSubmit = async (data: IFormInput) => {
+        const userRegister = {
+            nombreDeUsuario: data.userName,
+            nombre: data.firstName,
+            apellido: data.lastName,
+            email: data.email,
+            telefono: data.phone,
+            fechaDeNacimiento: "1990-08-14",
+            password: data.password,
+            confirmacionPassword: data.confirmPassword,
+            rol: "Usuario"
+        }
+
+        await handleRegister(userRegister);
+    };
 
     useEffect(() => {
         // Inicialización de la autenticación si es necesario
@@ -59,7 +74,6 @@ const Register = () => {
                 </div>
             </div>
 
-
             <div className="h-4/5 w-full max-w-xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-indigo-950 dark:border-white-700">
                 <form className="max-w-md mx-auto flex flex-col justify-between h-full" onSubmit={handleSubmit(onSubmit)}>
 
@@ -77,6 +91,14 @@ const Register = () => {
                         <InputForm type="tel" name='phone' id='phone' label='Teléfono' pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" register={register} error={errors.phone} />
                         <Datepicker register={register} error={errors.bornDate} />
                     </div>
+
+                    <div className="grid md:grid-cols-1 md:gap-6 text-red-400">
+                        {errorMessage &&
+                            errorMessage.split("|").map((element: string, index: number) => (
+                                <p key={index}>{element}</p>
+                            ))}
+                    </div>
+
 
                     <button type="submit" className="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-md w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 mt-auto">
                         Registrarme

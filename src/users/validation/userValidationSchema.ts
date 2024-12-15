@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-// Definir el esquema de validación usando Zod
-export const schema = z.object({
+
+export const schemaRegister = z.object({
     userName: z.string()
         .min(4, 'El nombre de usuario debe tener al menos 4 caracteres')
         .max(20, 'El nombre de usuario no puede tener más de 20 caracteres')
@@ -28,6 +28,16 @@ export const schema = z.object({
     path: ['confirmPassword'],
 });
 
-export type FormData = z.infer<typeof schema>;
+
+export const schemaLogin = z.object({
+    email: z.string()
+        .email('Correo electrónico inválido')
+        .nonempty('El correo es obligatorio'),
+    password: z.string()
+        .nonempty('La contraseña es obligatoria')
+})
+
+export type FormDataRegister = z.infer<typeof schemaRegister>;
+export type FormDataLogin = z.infer<typeof schemaLogin>;
 
 

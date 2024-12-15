@@ -1,8 +1,7 @@
 ---
 import LoginR from "../components/Login";
 import Layout from "../layouts/Layout.astro";
-import LoginPage from "../users/pages/LoginPage.astro";
-import RegisterPage from "../users/pages/RegisterPage.astro";
+import LoginPage from "./LoginPage.astro";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -11,5 +10,5 @@ const siteName = "Login"; //import.meta.env.PUBLIC_SITE_NAME;
 
 <!-- <Layout title={siteName}>
     <LoginR client:load />
-</Layout> --><!-- <LoginPage /> -->
-<RegisterPage />
+</Layout> --><!-- <LoginPage /> --><!-- <RegisterPage /> -->
+<LoginPage />

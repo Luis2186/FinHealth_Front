@@ -13,6 +13,34 @@ export const getUsers = async () => {
     }
   };
     
+ // Leer un solo usuario por ID
+ export const register = async (user) => {
+    try {
+        const response = await fetch(`${API_URL}/usuario/registrar`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+        });
+       
+    //   if (!response.ok) throw new Error("Error fetching user");
+    
+    if (!response.ok) {
+        // Si la respuesta no es exitosa, leemos el cuerpo para obtener detalles del error
+        const errorResponse = await response.json();
+        //throw new Error(errorResponse);
+        return errorResponse;
+        //throw new Error(errorResponse.error || "Error al registrar usuario: " + (errorResponse.detalles || "Detalles no disponibles"));
+    }
+
+      return await response.json();
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+
   // Leer un solo usuario por ID
   export const login = async (email,password) => {
     try {
@@ -41,9 +69,12 @@ export const getUsers = async () => {
   // Leer un solo usuario por ID
   export const getUserById = async (id) => {
     try {
-      const response = await fetch(`${API_URL}/${id}`);
+      const response = await fetch(`${API_URL}/usuario/obtener/${id}`);
+
       if (!response.ok) throw new Error("Error fetching user");
+
       return await response.json();
+
     } catch (error) {
       console.error(error);
       throw error;

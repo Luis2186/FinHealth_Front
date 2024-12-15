@@ -46,7 +46,7 @@ const Datepicker= ({register,error}) => {
             placeholder="Fecha de nacimiento"
             {...register("bornDate")}
           />
-           {error && <p className="text-red-500 text-sm mt-2">{error.message}</p>} {/* Mostrar el error debajo del input */}
+           {error && <p className="text-red-500 text-sm mt-2">{error.message}</p>} 
         </div>
       )
     );

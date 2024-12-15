@@ -1,47 +1,43 @@
 // src/stores/useAuthStore.js
-import {create} from 'zustand';
+import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import axios from 'axios';  // Asegúrate de importar axios
-import { login } from '../api/userApi';
+import axios from 'axios';
 
 const apiUrl = import.meta.env.PUBLIC_API_URL;
 
 const useAuthStore = create(persist(
   (set) => ({
-    userId: null,
-    token: null,
+    status: 'checking', // 'checking' / 'authenticated' / 'not-authenticated'
+    user: null,
     isAuthenticated: false,
-    
-    // Función para establecer el usuario
-    setUser: (userId, token) => {
-      set({ userId, token, isAuthenticated: true });
-    },
-    
-    //login
-    login: async (email,password) => {      
-        try {
-            const response= await login(email,password);
-            console.log(response)
-          } catch (error) {
-            console.log("Error: " + error )
-            set({ error: error.message });
-          }
+    errorMessage: undefined,
+
+    // Función para establecer el estado de checking
+    onChecking: () => set({ status: 'checking', user: null, isAuthenticated: false, errorMessage: undefined }),
+
+    // Función para manejar login
+    onLogin: (user) => set({ status: 'authenticated', user, isAuthenticated: true, errorMessage: undefined }),
+
+    // Función para manejar logout
+    onLogout: (errorMessage) => set({ status: 'not-authenticated', user: null, isAuthenticated: false, errorMessage }),
+
+    // Limpiar el mensaje de error
+    clearErrorMessage: () => set({ errorMessage: undefined }),
+
+    // Inicializa la autenticación al cargar la página (verifica si el usuario tiene un token)
+    initializeAuth: () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        set({ token, isAuthenticated: true, status: 'authenticated' });
+      } else {
+        set({ isAuthenticated: false, status: 'not-authenticated' });
+      }
     },
 
     // Función para cerrar sesión
-    logout: () => {
-      set({ userId: null, token: null, isAuthenticated: false });
-      localStorage.removeItem('userId');
+    clearSession: () => {
       localStorage.removeItem('token');
-    },
-
-    // Función para recuperar el usuario desde el localStorage
-    initializeAuth: () => {
-      const userId = localStorage.getItem('userId');
-      const token = localStorage.getItem('token');
-      if (userId && token) {
-        set({ userId, token, isAuthenticated: true });
-      }
+      set({user: null, isAuthenticated: false, status: 'not-authenticated' });
     },
   }),
   {

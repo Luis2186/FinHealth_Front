@@ -22,7 +22,7 @@ const useUserStore = create((set) => ({
   },
 
   // Función para agregar un usuario
-  addUser: async (user) => {
+  register: async (user) => {
     try {
       await axios.post('https://api.example.com/users', user);
       set((state) => ({ users: [...state.users, user] }));
