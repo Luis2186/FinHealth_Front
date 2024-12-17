@@ -1,0 +1,9 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getUsers } from "../users/api/userApi";
+import { DataAdmin } from "../users/components/DataAdmin";
+---
+
+<Layout title={"Login"}>
+    <DataAdmin client:load />
+</Layout>

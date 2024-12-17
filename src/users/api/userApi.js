@@ -4,11 +4,25 @@ const API_URL = import.meta.env.PUBLIC_API_URL;
 // Leer todos los usuarios
 export const getUsers = async () => {
     try {
-      const response = await fetch(`${API_URL}/usuario/paginados`);
-      if (!response.ok) throw new Error("Error obteniendo usuarios");
-      return await response.json();
+        // Obtener el token de localStorage (o de donde lo guardes)
+        const token = localStorage.getItem("token"); 
+
+        if (!token) {
+            throw new Error("No se encontró un token de autenticación.");
+        }
+
+        const response = await fetch(`${API_URL}/usuario/paginados`, {
+            method: "GET",
+            headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`, // Token en el encabezado
+            }
+        });
+       
+        if (!response.ok) throw new Error("Error obteniendo usuarios");
+        return await response.json();
     } catch (error) {
-      console.error(error);
+        console.error(error);
       throw error;
     }
   };
@@ -16,10 +30,12 @@ export const getUsers = async () => {
  // Leer un solo usuario por ID
  export const register = async (user) => {
     try {
+   
         const response = await fetch(`${API_URL}/usuario/registrar`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+           
         },
         body: JSON.stringify(user),
         });
