@@ -13,7 +13,7 @@ interface IFormInput {
 const Login = () => {
     const { handleLogin } = useAuth();
     const [remember, setRemember] = useState(false);
-    const { isAuthenticated, user } = useAuthStore();
+    const { isAuthenticated, user, errorMessage } = useAuthStore();
 
     // Usa useForm con tipos explícitos
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>({
@@ -96,6 +96,10 @@ const Login = () => {
                         </a>
                     </div>
                 </form>
+                {errorMessage && errorMessage.errors &&
+                    errorMessage.errors.map((element: { descripcion: string }, index: number) => (
+                        <p key={index} className='py-5 text-red-400'>{element.descripcion}</p>
+                    ))}
             </div>
         </div>
     );

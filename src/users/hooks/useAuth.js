@@ -23,7 +23,7 @@ export const useAuth = () => {
 
         // Llama a la API para hacer login
         const response = await login(email, password);
-        
+
         const usuario = await getUserById(response.id);
         
         onLogin(usuario); // Guarda el usuario y el token en el estado global
@@ -34,7 +34,7 @@ export const useAuth = () => {
         window.location.href = '/'; // Redirigir al home después de login
 
     } catch (err) {
-        onLogout('Credenciales inválidas');
+        onLogout(err);
         console.error('Credenciales inválidas', err);
     }
   };

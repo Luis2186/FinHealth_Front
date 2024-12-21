@@ -39,6 +39,9 @@ const useAuthStore = create(persist(
       localStorage.removeItem('token');
       set({user: null, isAuthenticated: false, status: 'not-authenticated' });
     },
+    clearMessageError: () => {
+      set({...user, errorMessage:undefined });
+    },
   }),
   {
     name: 'auth-storage', // Persistencia en localStorage
