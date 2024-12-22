@@ -1,34 +1,25 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import type { user } from '../types/user';
+import { useUser } from '../hooks/useUser';
 
-interface User {
-    id: string;
-    nombre: string;
-    apellido: string;
-    edad: number;
-    nombreDeUsuario: string;
-    fechaDeNacimiento: string;
-    fechaDeRegistro: string;
-    roles: [string];
-    telefono: string;
-    activo: boolean;
-    email: string;
-}
 
 interface ModalProps {
-    user: User;
+    user: user;
     isOpen: boolean;
     onClose: () => void;
-    onUpdate: (user: User) => void;
+    onUpdate: (userId: string, user: user) => void;
 }
 
 export const Modal: React.FC<ModalProps> = ({ user, isOpen, onClose, onUpdate }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm<User>({
+    const { register, handleSubmit, formState: { errors } } = useForm<user>({
         defaultValues: user, // Establecer los valores predeterminados a partir del usuario pasado
     });
 
-    const onSubmit = (data: User) => {
-        onUpdate(data);  // Como 'activo' ya es booleano, no necesitamos hacer ninguna conversión
+
+    const onSubmit = async (data: user) => {
+        console.log(user)
+        await onUpdate(data.id, data);  // Como 'activo' ya es booleano, no necesitamos hacer ninguna conversión
         onClose();
     };
 

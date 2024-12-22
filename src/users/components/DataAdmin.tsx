@@ -1,55 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import { getUsers } from '../api/userApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserGear, faUserPen, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from './Modal';
+import type { user } from '../types/user';
+import useUserStore from '../store/useUserStore';
+import { useUser } from '../hooks/useUser';
 
-interface user {
-    id: string
-    nombre: string;
-    apellido: string;
-    edad: number;
-    nombreDeUsuario: string;
-    fechaDeNacimiento: string;
-    fechaDeRegistro: string;
-    roles: [string];
-    telefono: string;
-    activo: boolean;
-    email: string;
-}
+
 export const DataAdmin = () => {
-    const [usuarios, setUsuarios] = useState<user[]>([]);
+    const { users } = useUserStore()
+    const { handleGetAllUsers, handleUpdate, handleRemoveUser } = useUser();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedUser, setSelectedUser] = useState<user>();
-
 
     useEffect(() => {
         fetchUsers()
     }, [])
 
+    useEffect(() => {
+    }, [users])
+
     // Función para obtener los usuarios
     const fetchUsers = async () => {
         try {
-            const usersData = await getUsers();
-            setUsuarios(usersData); // Guardamos los usuarios en el estado
-            console.log(usersData); // Solo para depuración
+            await handleGetAllUsers();
         } catch (error) {
             console.error("Error fetching usuarios:", error);
         }
     };
 
-    const handleUpdate = (updatedUser: user) => {
-        console.log('Usuario actualizado:', updatedUser);
-    };
-
     const handleModal = (usuario: user) => {
         setSelectedUser(usuario)
         setIsModalOpen(!isModalOpen)
-        console.log(selectedUser)
     }
 
-    console.log(selectedUser)
+
     // Función para manejar la búsqueda
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(event.target.value);
@@ -63,7 +49,7 @@ export const DataAdmin = () => {
     // ];
 
     // Filtrar los usuarios por la búsqueda
-    const filteredUsers = usuarios.filter(user =>
+    const filteredUsers = users.filter(user =>
         user.nombre?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         user.apellido?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         user.email?.toLowerCase().includes(searchQuery.toLowerCase())
@@ -181,6 +167,7 @@ export const DataAdmin = () => {
 
                                     <button
                                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                        onClick={() => handleRemoveUser(user.id)}
                                     >
                                         <FontAwesomeIcon icon={faTrashCan} className='fa-xl text-red-500 pr-5' />
                                     </button>

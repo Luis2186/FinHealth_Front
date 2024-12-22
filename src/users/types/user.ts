@@ -12,3 +12,12 @@ export interface user {
     activo: boolean;
     email: string;
 }
+
+interface UserStoreState {
+    users: user[]; // Array de objetos tipo User
+    loading: boolean;
+    errorMessage?: string;
+
+    // Métodos para manipular el estado
+    onLoading: () => void;
+}

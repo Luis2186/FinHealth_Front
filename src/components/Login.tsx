@@ -97,8 +97,8 @@ const Login = () => {
                     </div>
                 </form>
                 {errorMessage && errorMessage.errors &&
-                    errorMessage.errors.map((element: { descripcion: string }, index: number) => (
-                        <p key={index} className='py-5 text-red-400'>{element.descripcion}</p>
+                    errorMessage.errors.map((element: { description: string }, index: number) => (
+                        <p key={index} className='py-5 text-red-400'>{element.description}</p>
                     ))}
             </div>
         </div>

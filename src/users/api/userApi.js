@@ -59,9 +59,9 @@ export const updateUser = async (idUser, updatedUser) => {
     }
 };
 
-export const deleteUser = async (id) => {
+export const deleteUser = async (idUser) => {
     try {
-        const response = await axiosInstance.delete(`/usuario/actualizar/${idUser}`)
+        const response = await axiosInstance.delete(`/usuario/eliminar/${idUser}`)
         return response.data;
     } catch (error) {
         throw error;
@@ -113,3 +113,4 @@ export const RemoveRol = async (idUsuario,idRol,nombreRol) => {
         throw error.response ? error.response.data : error.message;
     }
 };
+

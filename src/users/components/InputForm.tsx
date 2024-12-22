@@ -1,7 +1,6 @@
 import type { Props } from "../../types/input";
 
 
-
 export const InputForm: React.FC<Props> = ({ type, name, id, placeholder = " ", label, required, pattern, register, validation, error }) => {
 
 

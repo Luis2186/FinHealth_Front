@@ -21,7 +21,7 @@ interface IFormInput {
 
 const Register = () => {
     // Estado de la autenticación
-    const { isAuthenticated, initializeAuth } = useAuthStore();
+    const { initializeAuth } = useAuthStore();
 
     const { handleRegister, errorMessage, clearErrorMessage } = useAuth();
 
@@ -54,7 +54,7 @@ const Register = () => {
             confirmacionPassword: data.confirmPassword,
             rol: "Usuario"
         }
-        console.log(userRegister.fechaDeNacimiento)
+
         await handleRegister(userRegister);
     };
 
@@ -96,12 +96,11 @@ const Register = () => {
                         {errorMessage && errorMessage.errors &&
                             <p> Error al registrar </p>
                             &&
-                            errorMessage.errors.map((element: { codigo: string, descripcion: string }, index: number) => (
-                                <p key={index}>{element.descripcion}</p>
+                            errorMessage.errors.map((element: { code: string, description: string }, index: number) => (
+                                <p key={index}>{element.description}</p>
                             ))
                         }
                     </div>
-
 
                     <button type="submit" className="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-md w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 mt-auto">
                         Registrarme

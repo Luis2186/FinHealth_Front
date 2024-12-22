@@ -2,9 +2,12 @@
 import { useState, useEffect } from 'react';
 import { login, register,getUserById } from '../api/userApi';
 import useAuthStore from '../store/useAuthStore';
+import useUserStore from '../store/useUserStore';
 
 export const useAuth = () => {
   const { onLogin, onChecking, onLogout, initializeAuth, user, isAuthenticated, errorMessage,clearErrorMessage } = useAuthStore();
+  const {onLoading, onRegister} = useUserStore();
+
   const [loading, setLoading] = useState(false);
 
   // Verificamos el estado de autenticacion en el localstorage
@@ -41,31 +44,23 @@ export const useAuth = () => {
 
   // Función para manejar el registro
   const handleRegister = async (user) => {
-    setLoading(true);
     try {
-      const response = await register(user);
+        onLoading()
+
+        const response = await register(user);
+        console.log(response)
+        onLogin(user);
+        onRegister(user)
         
-        if(response.status != 200) {
-             onLogout(response.detail)
-             return
-            //  return setTimeout(() => {
-            //     clearErrorMessage()
-            // },5000)
-        }
-      const usuario = await getUserById(response.id);
+        localStorage.setItem('token', response.token); // Guarda el token en el localStorage
 
-      onLogin(usuario);
-      localStorage.setItem('token', response.token); // Guarda el token en el localStorage
-
-      window.location.href = '/'; // Redirigir al home después de registro
+        //window.location.href = '/'; // Redirigir al home después de registro
 
     } catch (err) {
-
         onLogout(err);
-        
-        console.error('Error al registrar', err);
+
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
   };
   

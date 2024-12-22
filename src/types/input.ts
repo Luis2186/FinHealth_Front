@@ -10,3 +10,17 @@ export interface Props {
     validation?: object;
     error?: any;  // Errores de validación
 }
+
+export interface errorMessage {
+    title: string,
+    status: number,
+    detail: string,
+    instance: string,
+    errors: errorDetail[]
+}
+
+
+export interface errorDetail {
+    code: string,
+    description: string
+}
