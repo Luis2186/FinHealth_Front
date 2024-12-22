@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { schemaRegister } from '../validation/userValidationSchema';
 import { useAuth } from '../hooks/useAuth';
+import { formatDate } from '../utils/utils';
 
 interface IFormInput {
     userName: string;
@@ -19,7 +20,7 @@ interface IFormInput {
 }
 
 const Register = () => {
-    // Obtén el estado de la autenticación
+    // Estado de la autenticación
     const { isAuthenticated, initializeAuth } = useAuthStore();
 
     const { handleRegister, errorMessage, clearErrorMessage } = useAuth();
@@ -34,6 +35,11 @@ const Register = () => {
         clearErrorMessage();
     }, [])
 
+    useEffect(() => {
+        // Inicialización de la autenticación si es necesario
+        initializeAuth();
+    }, [initializeAuth]);
+
 
     // Función que maneja el envío del formulario
     const onSubmit = async (data: IFormInput) => {
@@ -43,20 +49,14 @@ const Register = () => {
             apellido: data.lastName,
             email: data.email,
             telefono: data.phone,
-            fechaDeNacimiento: "1990-08-14",
+            fechaDeNacimiento: formatDate(data.bornDate),
             password: data.password,
             confirmacionPassword: data.confirmPassword,
             rol: "Usuario"
         }
-
+        console.log(userRegister.fechaDeNacimiento)
         await handleRegister(userRegister);
     };
-
-    useEffect(() => {
-        // Inicialización de la autenticación si es necesario
-        initializeAuth();
-    }, [initializeAuth]);
-
 
     return (
         <div className="flex w-full h-[calc(100vh-72px)] justify-center items-center gap-5">
@@ -93,10 +93,13 @@ const Register = () => {
                     </div>
 
                     <div className="grid md:grid-cols-1 md:gap-6 text-red-400">
-                        {errorMessage &&
-                            errorMessage.split("|").map((element: string, index: number) => (
-                                <p key={index}>{element}</p>
-                            ))}
+                        {errorMessage && errorMessage.errors &&
+                            <p> Error al registrar </p>
+                            &&
+                            errorMessage.errors.map((element: { codigo: string, descripcion: string }, index: number) => (
+                                <p key={index}>{element.descripcion}</p>
+                            ))
+                        }
                     </div>
 
 

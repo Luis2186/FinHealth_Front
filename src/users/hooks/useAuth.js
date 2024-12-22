@@ -61,13 +61,14 @@ export const useAuth = () => {
 
     } catch (err) {
 
-        onLogout('Error al registrar');
+        onLogout(err);
         
         console.error('Error al registrar', err);
     } finally {
       setLoading(false);
     }
   };
+  
 
   return {
     user,
