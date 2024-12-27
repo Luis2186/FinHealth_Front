@@ -5,6 +5,9 @@ export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	theme: {
 		extend: {
+            backgroundImage: {
+                'gradient-violet': 'linear-gradient(to top, #7028e4 0%, #e5b2ca 100%)',
+              },
             colors: {
                 primary: {
                   50:  '#fbf4ff',

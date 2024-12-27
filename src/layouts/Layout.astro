@@ -51,18 +51,7 @@ const { title } = Astro.props;
 <style is:global>
     html,
     body {
-        background:
-            radial-gradient(
-                circle at 50% 0,
-                rgba(10, 6, 70, 0.5),
-                rgba(36, 2, 49, 0) 70.71%
-            ),
-            radial-gradient(
-                    circle at 93.3% 75%,
-                    rgba(47, 3, 150, 0.5),
-                    rgba(28, 2, 49, 0) 70.71%
-                )
-                rgb(12, 8, 32);
+        background-image: linear-gradient(to top, #7028e4 0%, #e5b2ca 100%);
         margin: 0;
         font-family: system-ui, sans-serif;
         width: 100%;
@@ -77,7 +66,18 @@ const { title } = Astro.props;
             "aside header header"
             "aside main main";
         grid-template-columns: 300px 1fr;
-        grid-template-rows: 1fr auto;
+        grid-template-rows: 70px auto;
+    }
+
+    /* Añadir un diseño responsivo usando Tailwind para pantallas grandes */
+    @media (max-width: 768px) {
+        #app {
+            grid-template-areas:
+                " header header"
+                " main main";
+            grid-template-columns: 300px 1fr;
+            grid-template-rows: 70px auto;
+        }
     }
 </style>
 

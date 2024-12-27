@@ -59,9 +59,9 @@ const Register = () => {
     };
 
     return (
-        <div className="flex w-full h-[calc(100vh-72px)] justify-center items-center gap-5">
+        <div className="flex w-full h-[calc(100vh-72px)] justify-center items-center gap-5 ">
 
-            <div className="h-4/5 w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-indigo-950 dark:border-white-700">
+            <div className="h-4/5 w-full max-w-sm p-4 border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-indigo-950 dark:border-white-700 bg-indigo-950 bg-opacity-40">
 
 
                 <div className="w-full h-full flex flex-col justify-center items-center">
@@ -74,7 +74,7 @@ const Register = () => {
                 </div>
             </div>
 
-            <div className="h-4/5 w-full max-w-xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-indigo-950 dark:border-white-700">
+            <div className="h-4/5 w-full max-w-xl p-4  border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-indigo-950 dark:border-white-700 bg-indigo-950 bg-opacity-40">
                 <form className="max-w-md mx-auto flex flex-col justify-between h-full" onSubmit={handleSubmit(onSubmit)}>
 
                     <InputForm type="text" name='userName' id='userName' label='Nombre de usuario' register={register} error={errors.userName} />

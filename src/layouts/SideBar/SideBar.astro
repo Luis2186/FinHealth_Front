@@ -7,7 +7,7 @@ import SideBarItem from "./SideBar-item.astro";
     data-drawer-toggle="default-sidebar"
     aria-controls="default-sidebar"
     type="button"
-    class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-primary-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+    class="inline-flex absolute items-center p-2 mt-2 ms-3 text-sm text-primary-900 rounded-lg sm:hidden hover:bg-primary-100 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:text-primary-400 dark:hover:bg-primary-700 dark:focus:ring-primary-600"
 >
     <span class="sr-only">Open sidebar</span>
     <svg
@@ -27,11 +27,13 @@ import SideBarItem from "./SideBar-item.astro";
 
 <aside
     id="default-sidebar"
-    class="top-0 left-0 z-40 relative h-screen transition-transform -translate-x-full sm:translate-x-0 [grid-area:aside]"
+    class="top-0 left-0 z-40 fixed md:relative h-screen transition-transform -translate-x-full sm:translate-x-0 [grid-area:aside] sm:block"
     aria-label="Sidebar"
 >
-    <div class="h-full px-3 overflow-y-auto bg-gray-50 dark:bg-primary-950">
-        <div class="flex align-middle h-12 my-5 justify-between">
+    <div
+        class="h-full px-3 overflow-y-auto bg-indigo-950 bg-opacity-30 dark:bg-indigo-950 dark:bg-opacity-80"
+    >
+        <div class="flex align-middle h-12 my-3 justify-between">
             <a
                 href="https://flowbite.com"
                 class="flex items-center space-x-3 rtl:space-x-reverse w-44"
@@ -42,14 +44,14 @@ import SideBarItem from "./SideBar-item.astro";
                     alt="Flowbite Logo"
                 />
                 <span
-                    class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white text-primary-800"
+                    class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white text-white"
                     >FinHealth</span
                 >
             </a>
             <button
                 id="theme-toggle"
                 type="button"
-                class="text-primary-500 dark:text-primary-200 hover:bg-primary-100 dark:hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-700 rounded-lg text-sm p-2.5 justify-items-end"
+                class="text-white dark:text-white hover:bg-primary-700 dark:hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-700 rounded-lg text-sm p-2.5 justify-items-end"
             >
                 <svg
                     id="theme-toggle-dark-icon"
@@ -75,10 +77,10 @@ import SideBarItem from "./SideBar-item.astro";
             </button>
         </div>
 
-        <ul class="space-y-2 font-medium">
-            <SideBarItem title="Dashboard">
+        <ul class="space-y-2 font-medium mt-16">
+            <SideBarItem title="Dashboard" ref={""}>
                 <svg
-                    class="w-5 h-5 text-primary-600 transition duration-75 dark:text-primary-200 group-hover:text-primary-800 dark:group-hover:text-white"
+                    class="w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-primary-800 dark:group-hover:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -96,7 +98,7 @@ import SideBarItem from "./SideBar-item.astro";
 
             <SideBarItem title="Kanban">
                 <svg
-                    class="flex-shrink-0 w-5 h-5 text-primary-600 transition duration-75 dark:text-primary-200 group-hover:text-primary-800 dark:group-hover:text-white"
+                    class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-primary-700 dark:group-hover:text-primary-700"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -110,7 +112,7 @@ import SideBarItem from "./SideBar-item.astro";
             </SideBarItem>
             <SideBarItem title="Inbox">
                 <svg
-                    class="flex-shrink-0 w-5 h-5 text-primary-600 transition duration-75 dark:text-primary-200 group-hover:text-primary-800 dark:group-hover:text-white"
+                    class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-primary-800 dark:group-hover:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -130,7 +132,7 @@ import SideBarItem from "./SideBar-item.astro";
 
             <SideBarItem title="Users">
                 <svg
-                    class="flex-shrink-0 w-5 h-5 text-primary-600 transition duration-75 dark:text-primary-200 group-hover:text-primary-800 dark:group-hover:text-white"
+                    class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-primary-800 dark:group-hover:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -145,7 +147,7 @@ import SideBarItem from "./SideBar-item.astro";
 
             <SideBarItem title="Products">
                 <svg
-                    class="flex-shrink-0 w-5 h-5 text-primary-600 transition duration-75 dark:text-primary-200 group-hover:text-primary-800 dark:group-hover:text-white"
+                    class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-primary-800 dark:group-hover:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -158,9 +160,9 @@ import SideBarItem from "./SideBar-item.astro";
                 </svg>
             </SideBarItem>
 
-            <SideBarItem title="Sign In">
+            <SideBarItem title="Sign In" ref="/LoginPage">
                 <svg
-                    class="flex-shrink-0 w-5 h-5 text-primary-600 transition duration-75 dark:text-primary-200 group-hover:text-primary-800 dark:group-hover:text-white"
+                    class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-primary-800 dark:group-hover:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -177,9 +179,9 @@ import SideBarItem from "./SideBar-item.astro";
                 </svg>
             </SideBarItem>
 
-            <SideBarItem title="Sign Up">
+            <SideBarItem title="Sign Up" ref="/RegisterPage">
                 <svg
-                    class="flex-shrink-0 w-5 h-5 text-primary-600 transition duration-75 dark:text-primary-200 group-hover:text-primary-800 dark:group-hover:text-white"
+                    class="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-primary-800 dark:group-hover:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
