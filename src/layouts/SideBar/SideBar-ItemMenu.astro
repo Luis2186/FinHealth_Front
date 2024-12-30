@@ -1,0 +1,20 @@
+---
+const { title } = Astro.props;
+---
+
+<li>
+    <button
+        type="button"
+        class="flex items-center w-full p-2 text-base text-white transition duration-75 rounded-lg group hover:bg-primary-800 dark:text-white dark:hover:bg-primary-700"
+        aria-controls="dropdown-example"
+        data-collapse-toggle="dropdown-example"
+    >
+        <slot name="li-icon" />
+        <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap"
+            >{title}</span
+        >
+    </button>
+    <ul id="dropdown-example" class="hidden py-2 space-y-2 mx-3">
+        <slot name="li-item" />
+    </ul>
+</li>

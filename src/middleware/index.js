@@ -34,7 +34,7 @@ const middleware = async (context, next) => {
     const token = cookies && cookies.match(/token=([^;]+)/)?.[1];
 
       // Comprobar si ya está en la página de inicio de sesión
-    if (context.request.url.includes("/LoginPage")) {
+    if (context.request.url.includes("/LoginPage") || context.request.url.includes("/RegisterPage")) {
         // Si ya está en la página de login, no hacemos nada
         return next();
     }
@@ -48,9 +48,6 @@ const middleware = async (context, next) => {
         }
         return Response.redirect(new URL("/LoginPage", context.url), 302);
     }
-
-
-
     
     return Response.redirect(new URL("/LoginPage", context.url), 302);
 
