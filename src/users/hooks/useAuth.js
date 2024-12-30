@@ -10,11 +10,6 @@ export const useAuth = () => {
 
   const [loading, setLoading] = useState(false);
 
-  // Verificamos el estado de autenticacion en el localstorage
-  useEffect(() => {
-    initializeAuth(); // Verifica si hay un token en localStorage
-  }, []);
-
   // Función para manejar el login
   const handleLogin = async (email, password) => {
     try {

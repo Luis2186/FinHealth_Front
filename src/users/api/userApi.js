@@ -32,7 +32,7 @@ export const getUsers = async () => {
 export const getUserById = async (id) => {
     try {
         const response = await axiosInstance.get(`usuario/obtener/${id}`) 
-
+        console.log(response)
         return response.data;
     } catch (error) {
         throw error.response ? error.response.data : error.message;
