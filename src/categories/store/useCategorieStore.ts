@@ -22,7 +22,7 @@ interface categorieStore {
 }
 
 
-const useCategorieStore = create<categorieStore>((set) => ({
+export const useCategorieStore = create<categorieStore>((set) => ({
     categories: [],
     loading: false,
     errorMessage: undefined,
