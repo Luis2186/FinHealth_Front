@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import useAuthStore from '../users/store/useAuthStore';
-import { useAuth } from '../users/hooks/useAuth';
+import useAuthStore from '../store/useAuthStore';
+import { useAuth } from '../hooks/useAuth';
 import { useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
-import { schemaLogin } from '../users/validation/userValidationSchema';
+import { schemaLogin } from '../validation/userValidationSchema';
 
 interface IFormInput {
     email: string;
