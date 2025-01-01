@@ -12,11 +12,22 @@ export const register = async (user) => {
 export const login = async (email, password) => {
   try {
     const response = await axiosInstance.post('usuario/login', { email, password });
+
     return response.data; 
   } catch (error) {
     throw error.response ? error.response.data : error.message; 
   }
 };
+
+export const logout = async () => {
+    try {
+      const response = await axiosInstance.post('usuario/logout');
+ 
+      return response; 
+    } catch (error) {
+      throw error.response ? error.response.data : error.message; 
+    }
+  };
 
 // Leer todos los usuarios
 export const getUsers = async () => {

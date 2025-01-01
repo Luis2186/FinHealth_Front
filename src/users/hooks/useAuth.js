@@ -1,6 +1,6 @@
 // src/hooks/useAuth.js
 import { useState, useEffect } from 'react';
-import { login, register,getUserById } from '../api/userApi';
+import { login,logout, register,getUserById } from '../api/userApi';
 import useAuthStore from '../store/useAuthStore';
 import useUserStore from '../store/useUserStore';
 
@@ -8,13 +8,10 @@ export const useAuth = () => {
   const { onLogin, onChecking, onLogout, initializeAuth, user, isAuthenticated, errorMessage,clearErrorMessage } = useAuthStore();
   const {onLoading, onRegister} = useUserStore();
 
-  const [loading, setLoading] = useState(false);
 
   // Función para manejar el login
   const handleLogin = async (email, password) => {
     try {
-
-        if (isAuthenticated) return; // Si ya está autenticado, retornamos
 
         // Inicia el estado de autenticación en "checking"
         onChecking();
@@ -26,10 +23,21 @@ export const useAuth = () => {
         
         onLogin(usuario); // Guarda el usuario y el token en el estado global
 
-        // Guarda el token en el localStorage
-        localStorage.setItem('token', response.token);
+        window.location.href = "/AdminUsersPage"; // Redirigir al home después de login
 
-        window.location.href = '/'; // Redirigir al home después de login
+    } catch (err) {
+        onLogout(err);
+        console.error('Credenciales inválidas', err);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+        const response = await logout();
+        
+        onLogout();
+
+        window.location.href = '/LoginPage'; // Redirigir al home después de login
 
     } catch (err) {
         onLogout(err);
@@ -65,8 +73,8 @@ export const useAuth = () => {
     isAuthenticated,
     errorMessage,
     handleLogin,
+    handleLogout,
     handleRegister,
     clearErrorMessage,
-    loading,
   };
 };

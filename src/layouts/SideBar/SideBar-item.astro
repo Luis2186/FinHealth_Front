@@ -1,9 +1,10 @@
 ---
-const { title, ref } = Astro.props;
+const { title, ref, id } = Astro.props;
 ---
 
 <li>
     <a
+        id={id}
         href={ref}
         class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-primary-800 dark:hover:bg-primary-700"
     >

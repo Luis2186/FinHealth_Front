@@ -1,6 +1,12 @@
 ---
+import { verifyAuth } from "../../users/utils/utils";
 import SideBarItem from "./SideBar-item.astro";
 import SideBarItemMenu from "./SideBar-ItemMenu.astro";
+
+const token = Astro.cookies.get("token")?.value ?? "";
+const responseToken = await verifyAuth(token);
+const roles = responseToken.payload.roles.toLowerCase();
+console.log(roles);
 ---
 
 <button
@@ -81,24 +87,32 @@ import SideBarItemMenu from "./SideBar-ItemMenu.astro";
         <ul class="space-y-2 font-medium mt-16">
             <SideBarItemMenu title="Panel de control">
                 <i class="fa-solid fa-gears fa-lg" slot="li-icon"></i>
+                {
+                    roles == "sys_adm" && (
+                        <SideBarItem
+                            title="Administracion de usuarios"
+                            ref={"/AdminUsersPage"}
+                            slot="li-item"
+                        >
+                            <i
+                                class="fa-solid fa-users fa-lg"
+                                slot="after-title"
+                            />
+                        </SideBarItem>
+                    )
+                }
 
-                <SideBarItem
-                    title="Administracion de usuarios"
-                    ref={"/AdminUsersPage"}
-                    slot="li-item"
-                >
-                    <i class="fa-solid fa-users fa-lg" slot="after-title"></i>
-                </SideBarItem>
                 <SideBarItem title="Categorias" ref={""} slot="li-item">
                     <i class="fa-solid fa-list fa-lg" slot="after-title"></i>
                 </SideBarItem>
+
                 <SideBarItem title="Monedas" ref={""} slot="li-item">
                     <i class="fa-solid fa-dollar-sign fa-lg" slot="after-title"
                     ></i>
                 </SideBarItem>
             </SideBarItemMenu>
 
-            <SideBarItem title="Sign In" ref="/LoginPage">
+            <!-- <SideBarItem title="Sign In" ref="/LoginPage">
                 <i
                     class="fa-solid fa-arrow-right-to-bracket fa-lg"
                     slot="after-title"></i>
@@ -107,7 +121,30 @@ import SideBarItemMenu from "./SideBar-ItemMenu.astro";
             <SideBarItem title="Sign Up" ref="/RegisterPage">
                 <i class="fa-regular fa-pen-to-square fa-lg" slot="after-title"
                 ></i>
+            </SideBarItem> -->
+
+            <SideBarItem title="Sign out" ref="/LoginPage" id="signOut">
+                <i
+                    class="fa-solid fa-arrow-right-to-bracket fa-lg fa-rotate-180"
+                    slot="after-title"></i>
             </SideBarItem>
         </ul>
     </div>
 </aside>
+
+<script>
+    import axiosInstance from "../../api/axiosConfig";
+    import { logout } from "../../users/api/userApi";
+
+    document
+        .querySelector("#signOut")
+        ?.addEventListener("click", async (event) => {
+            event.preventDefault();
+            try {
+                const response = await logout();
+                if (response.status == 200) window.location.href = "/LoginPage";
+            } catch (error) {
+                console.error("Error al eliminar la cookie:", error);
+            }
+        });
+</script>

@@ -3,7 +3,7 @@ import axios from 'axios';
 // Crea una instancia de axios con configuración predeterminada
 const axiosInstance = axios.create({
   baseURL: import.meta.env.PUBLIC_API_URL, // Utiliza tu variable de entorno para la URL base
-  timeout: 5000,  // Tiempo de espera de 5 segundos (puedes ajustarlo según lo necesites)
+  //timeout: 10000,  // Tiempo de espera de 5 segundos (puedes ajustarlo según lo necesites)
   withCredentials : true,
 });
 

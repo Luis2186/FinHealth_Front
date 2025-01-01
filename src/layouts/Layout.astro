@@ -12,9 +12,8 @@ interface Props {
 
 const { title } = Astro.props;
 
-const cookies = Astro.cookies.get("accessToken")?.value ?? "";
+const cookies = Astro.cookies.get("token")?.value ?? "";
 
-console.log(cookies);
 ---
 
 <!doctype html>

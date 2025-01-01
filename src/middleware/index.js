@@ -1,39 +1,22 @@
-import jwt from 'jsonwebtoken';  // Asegúrate de tener jwt en tu proyecto
-import { defineMiddleware } from "astro/middleware";
+// Asegúrate de tener jwt en tu proyecto
+import { verifyAuth } from '../users/utils/utils';
 
-const INDEX_PATH = "/";
+const rutasPermitidasAdministrador = [
+    "/AdminUsersPage",
+];
 
-const verifyAuth = async (token) => {
-    if (!token) {
-      return {
-        status: "unauthorized",
-        msg: "Please pass a request token",
-      };
-    }
-  
-    try {
-      // La clave secreta que usas para firmar el token (es importante que esta clave sea segura)
-        const secret = import.meta.env.CLAVE_SECRETA || 'mi_clave_secreta'; 
-        // Verifica el token
-        const decoded = jwt.verify(token, secret);
 
-      return {
-        status: "authorized",
-        payload: decoded,
-        msg: "successfully verified auth token",
-      };
-    } catch (err) {
-        console.debug(err);
-        return { status: "error", msg: "could not validate auth token" };
-    }
-  };
+
+
+
+
 
 const middleware = async (context, next) => {
 
     const cookies = context.request.headers.get("Cookie");
     const token = cookies && cookies.match(/token=([^;]+)/)?.[1];
 
-      // Comprobar si ya está en la página de inicio de sesión
+      // Deja pasar sin verificar el token las paginas incluidas
     if (context.request.url.includes("/LoginPage") || context.request.url.includes("/RegisterPage")) {
         // Si ya está en la página de login, no hacemos nada
         return next();
@@ -41,7 +24,12 @@ const middleware = async (context, next) => {
 
     if (token) {
         const validationResult = await verifyAuth(token);
+        const roles = validationResult.payload.roles.toLowerCase();
         
+        const esRutaDeAdministrador = rutasPermitidasAdministrador.some(ruta => context.request.url.includes(ruta));
+
+        if( esRutaDeAdministrador && roles != "sys_adm") return Response.redirect(new URL("/LoginPage", context.url), 302);
+
         if (validationResult) {
           // forward request 
           return next();
