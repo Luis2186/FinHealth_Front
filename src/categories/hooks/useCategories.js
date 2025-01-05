@@ -1,26 +1,43 @@
-import { getAllCategories } from "../api/categoriesApi";
+import { getAllCategories,getCategorieById } from "../api/categoriesApi";
 import { useCategorieStore } from "../store/useCategorieStore"
 
 
 
 export const useCategories = () => {
-    const {onGetAllCategories,onError,onLoading,onCreate,onRemove,onUpdate} = useCategorieStore();
+    const {onGetAll,onError,onLoading,onCreate,onRemove,onUpdate,setCurrentCategorie,clearCurrentCategorie} = useCategorieStore();
 
     const handleGetAllCategories = async () => {
+        
+        onLoading()
         
         const response = await getAllCategories();
         
         if(response.status == 200){
 
-            onGetAllCategories(response.data);
+            onGetAll(response.data);
             return response.data
         }
 
         return response.error
     }
 
-    return {
-        handleGetAllCategories,
+    const handleGetCategorieById = async (id) => {
+        onLoading()
+        const response = await getCategorieById(id);
+        
+        if(response.status == 200){
+            setCurrentCategorie(response.data);
+            return response.data
+        }
+
+        return response.error
     }
 
+
+
+
+    return {
+        handleGetAllCategories,
+        handleGetCategorieById,
+    }
 }

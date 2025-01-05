@@ -1,36 +1,16 @@
 import { create } from 'zustand'
-import type { errorMessage } from '../../types/input';
-
-interface categorie {
-    id: number,
-    nombre: string,
-    descripcion: string
-}
-
-interface categorieStore {
-    categories: categorie[]; // Lista de usuarios
-    loading: boolean; // Indica si la tienda está en estado de carga
-    errorMessage?: errorMessage; // Mensaje de error, opcional
-
-    // Métodos para manipular el estado
-    onLoading: () => void;
-    onGetAllCategories: (categories: categorie[], errorMessage?: errorMessage) => void;
-    onCreate: (categorie: categorie) => void;
-    onRemove: (categorieId: number) => void;
-    onUpdate: (categorieId: number, updatedUser: Partial<categorie>) => void;
-    onError: (error: errorMessage) => void;
-}
-
+import type { categorieStore, categorie } from '../types/categoriesTypes';
 
 export const useCategorieStore = create<categorieStore>((set) => ({
     categories: [],
     loading: false,
     errorMessage: undefined,
+    currentCategorie: undefined,
 
     onLoading: () => {
         set((state) => ({ ...state, loading: true }))
     },
-    onGetAllCategories: (categories, errorMessage) => {
+    onGetAll: (categories, errorMessage) => {
         set((state) => ({ categories, loading: false, errorMessage }))
     },
     onCreate: (categorie) => {
@@ -54,5 +34,11 @@ export const useCategorieStore = create<categorieStore>((set) => ({
     },
     onError: (errorMessage) => {
         set((state) => ({ ...state, errorMessage }))
+    },
+    setCurrentCategorie: (currentCategorie: categorie) => {
+        set((state) => ({ ...state, loading: false, currentCategorie }))
+    },
+    clearCurrentCategorie: () => {
+        set((state) => ({ ...state, currentCategorie: undefined }))
     }
 }))
