@@ -24,9 +24,13 @@ const middleware = async (context, next) => {
 
     if (token) {
         const validationResult = await verifyAuth(token);
-        const roles = validationResult.payload.roles.toLowerCase();
+        console.log(validationResult)
         
-        const esRutaDeAdministrador = rutasPermitidasAdministrador.some(ruta => context.request.url.includes(ruta));
+        if (validationResult.status == "error")  return Response.redirect(new URL("/LoginPage", context.url), 302);
+        
+        const roles = validationResult?.payload.roles.toLowerCase();
+        
+        const esRutaDeAdministrador = rutasPermitidasAdministrador?.some(ruta => context.request.url.includes(ruta));
 
         if( esRutaDeAdministrador && roles != "sys_adm") return Response.redirect(new URL("/LoginPage", context.url), 302);
 

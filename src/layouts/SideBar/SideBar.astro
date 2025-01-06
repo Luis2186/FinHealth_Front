@@ -5,7 +5,7 @@ import SideBarItemMenu from "./SideBar-ItemMenu.astro";
 
 const token = Astro.cookies.get("token")?.value ?? "";
 const responseToken = await verifyAuth(token);
-const roles = responseToken.payload.roles.toLowerCase();
+const roles = responseToken?.payload?.roles?.toLowerCase();
 console.log(roles);
 ---
 

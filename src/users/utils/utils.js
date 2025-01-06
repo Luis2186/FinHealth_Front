@@ -30,3 +30,9 @@ export const formatDate = (dateString) => {
         return { status: "error", msg: "could not validate auth token" };
     }
   };
+
+export const tokenValid = async (token) => {
+ 
+    const tokenValidation = await verifyAuth(token);
+    return tokenValidation?.status == "authorized";
+}
