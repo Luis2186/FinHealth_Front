@@ -4,7 +4,7 @@ import React from 'react'
 
 export const SubCategories = ({subCategories}) => {
   
-  console.log(subCategories)
+ 
     return (
  
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-9/12 h-full ">

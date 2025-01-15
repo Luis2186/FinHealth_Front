@@ -14,7 +14,7 @@ const rutasPermitidasAdministrador = [
 const middleware = async (context, next) => {
 
     const cookies = context.request.headers.get("Cookie");
-    const token = cookies && cookies.match(/token=([^;]+)/)?.[1];
+    const token = cookies && cookies.match(/access_token=([^;]+)/)?.[1];
 
       // Deja pasar sin verificar el token las paginas incluidas
     if (context.request.url.includes("/LoginPage") || context.request.url.includes("/RegisterPage")) {

@@ -3,10 +3,9 @@ import { verifyAuth } from "../../users/utils/utils";
 import SideBarItem from "./SideBar-item.astro";
 import SideBarItemMenu from "./SideBar-ItemMenu.astro";
 
-const token = Astro.cookies.get("token")?.value ?? "";
+const token = Astro.cookies.get("access_token")?.value ?? "";
 const responseToken = await verifyAuth(token);
 const roles = responseToken?.payload?.roles?.toLowerCase();
-console.log(roles);
 ---
 
 <button
@@ -38,7 +37,7 @@ console.log(roles);
     aria-label="Sidebar"
 >
     <div
-        class="h-full px-3 overflow-y-auto bg-indigo-950 bg-opacity-30 dark:bg-indigo-950 dark:bg-opacity-80"
+        class="h-full px-3 overflow-y-auto bg-primary-600 bg-opacity-100 dark:bg-primary-950 dark:bg-opacity-100"
     >
         <div class="flex align-middle h-12 my-3 justify-between">
             <a

@@ -31,8 +31,8 @@ export const formatDate = (dateString) => {
     }
   };
 
-export const tokenValid = async (token) => {
- 
-    const tokenValidation = await verifyAuth(token);
-    return tokenValidation?.status == "authorized";
-}
+    export const tokenValid = async (token) => {
+    
+        const tokenValidation = await verifyAuth(token);
+        return tokenValidation?.status == "authorized";
+    }

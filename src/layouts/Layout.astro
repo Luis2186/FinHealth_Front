@@ -13,7 +13,7 @@ interface Props {
 
 const { title } = Astro.props;
 
-const token = Astro.cookies.get("token")?.value ?? "";
+const token = Astro.cookies.get("access_token")?.value ?? "";
 const tokenOk = await tokenValid(token);
 ---
 
@@ -48,16 +48,16 @@ const tokenOk = await tokenValid(token);
     <body>
         {
             tokenOk ? (
-                <div id="app">
+                <div id="app" class="bg-primary-50">
                   
                     <SideBar />
-                    <div class="[grid-area:main]">
+                    <div class="[grid-area:main] ">
                         <slot />
                     </div>
                 </div>
             ) : (
                 <Menu />
-                <div class="w-full ">
+                <div class="w-full bg-gradient-to-t from-[#7028e4] to-[#e5b2ca]">
                     <slot />
                 </div>
             )
@@ -68,7 +68,7 @@ const tokenOk = await tokenValid(token);
 <style is:global>
     html,
     body {
-        background-image: linear-gradient(to top, #7028e4 0%, #e5b2ca 100%);
+        /* background-image: linear-gradient(to top, #7028e4 0%, #e5b2ca 100%); */
         margin: 0;
         font-family: system-ui, sans-serif;
         width: 100%;
