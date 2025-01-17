@@ -6,24 +6,33 @@ const rutasPermitidasAdministrador = [
     "/AdminUsersPage",
 ];
 
+const routesUsers = [
+    "/AdminUsersPage",
+];
+
+const routesWithoutAuthentication  = [
+    "/LoginPage",
+    "/RegisterPage"
+];
 
 const middleware = async (context, next) => {
 
     const cookies = context.request.headers.get("Cookie");
     let token = cookies && cookies.match(/access_token=([^;]+)/)?.[1];
+    const routesWithoutAuth = routesWithoutAuthentication?.some(ruta => context.request.url.includes(ruta));
 
       // Deja pasar sin verificar el token las paginas incluidas
-    if (context.request.url.includes("/LoginPage") || context.request.url.includes("/RegisterPage")) {
+    if (routesWithoutAuth) {
         // Si ya está en la página de login, no hacemos nada
         return next();
     }
-    
+
     let validationResult = await verifyAuth(token);
     const tokenCloseToExpiration = validationResult.closeToExpiration
-   
+    // console.log(validationResult)
     if (validationResult.status == "unauthorized" || tokenCloseToExpiration) {
         const response = await validateAndRefreshToken(context)
-
+        
         if(response?.status == 404) return Response.redirect(new URL("/LoginPage", context.url), 302);
 
         return Response.redirect(new URL(context.url), 302);
@@ -63,7 +72,7 @@ const validateAndRefreshToken = async (context ) => {
 
         if(refreshTokenCookie) {
             const res = await refreshToken(refreshTokenCookie)
-
+            //console.log(res)
             if(res?.data?.accessToken && res?.data?.refreshToken){
                 context.cookies.set("access_token", res.data.accessToken, {
                     httpOnly: true, // Solo accesible por HTTP, no en JavaScript

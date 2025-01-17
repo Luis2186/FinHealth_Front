@@ -12,16 +12,21 @@ const axiosInstance = axios.create({
 
 
 
-// Interceptor para agregar el token de autenticación a todas las solicitudes
-// axiosInstance.interceptors.response.use(
-//     (response) => response,
-//     (error) => {
-//       if (error.response && error.response.status === 401) {
-//         // Maneja errores de autenticación, por ejemplo, redirigiendo al login
-//         window.location.href = '/LoginPage';
-//       }
-//       return Promise.reject(error);
-//     }
-//   );
+// Interceptor de respuesta para manejar el código de estado 401 (Unauthorized)
+axiosInstance.interceptors.response.use(
+    response => {
+      return response;  // Si la respuesta es exitosa, simplemente la retornamos
+    },
+    error => {
+      // Si la respuesta es un 401, redirigimos al login
+
+      if (error.response && error.response.status === 401) {
+        // Token inválido o expirado. Redirigiendo al login.
+        window.location.href = '/LoginPage'; // Usando window.location para redirigir
+      }
+      return Promise.reject(error);
+    }
+  );
+
 
 export default axiosInstance;
