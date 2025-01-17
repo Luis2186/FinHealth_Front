@@ -1,88 +1,107 @@
 // Asegúrate de tener jwt en tu proyecto
-import { verifyAuth } from '../users/utils/utils';
+import { refreshToken } from '../users/api/userApi';
+import { tokencloseToExpiration, verifyAuth } from '../users/utils/utils';
 
 const rutasPermitidasAdministrador = [
     "/AdminUsersPage",
 ];
 
 
-
-
-
-
-
 const middleware = async (context, next) => {
 
     const cookies = context.request.headers.get("Cookie");
-    const token = cookies && cookies.match(/access_token=([^;]+)/)?.[1];
+    let token = cookies && cookies.match(/access_token=([^;]+)/)?.[1];
 
       // Deja pasar sin verificar el token las paginas incluidas
     if (context.request.url.includes("/LoginPage") || context.request.url.includes("/RegisterPage")) {
         // Si ya está en la página de login, no hacemos nada
         return next();
     }
+    
+    let validationResult = await verifyAuth(token);
+    const tokenCloseToExpiration = validationResult.closeToExpiration
+   
+    if (validationResult.status == "unauthorized" || tokenCloseToExpiration) {
+        const response = await validateAndRefreshToken(context)
 
-    if (token) {
-        const validationResult = await verifyAuth(token);
-        console.log(validationResult)
-        
-        if (validationResult.status == "error")  return Response.redirect(new URL("/LoginPage", context.url), 302);
-        
+        if(response?.status == 404) return Response.redirect(new URL("/LoginPage", context.url), 302);
+
+        return Response.redirect(new URL(context.url), 302);
+    }
+
+    if(validationResult?.payload?.roles)
+    {
         const roles = validationResult?.payload.roles.toLowerCase();
-        
         const esRutaDeAdministrador = rutasPermitidasAdministrador?.some(ruta => context.request.url.includes(ruta));
 
         if( esRutaDeAdministrador && roles != "sys_adm") return Response.redirect(new URL("/LoginPage", context.url), 302);
 
         if (validationResult) {
-          // forward request 
-          return next();
+           
+            return next();
         }
-        return Response.redirect(new URL("/LoginPage", context.url), 302);
     }
-    
-    return Response.redirect(new URL("/LoginPage", context.url), 302);
 
+    return Response.redirect(new URL("/LoginPage", context.url), 302);
 };
+
+
+const validateAndRefreshToken = async (context ) => {
+
+    
+    try {
+        const cookies = context.request.headers.get("Cookie");
+        let refreshTokenCookie = cookies && cookies.match(/refresh_token=([^;]+)/)?.[1];
+        
+        if (!refreshTokenCookie) {
+            return {
+              status: 404,
+              title: 'Error refresh token',
+              msg: "Please pass a request refresh token",
+            };
+          }
+
+        if(refreshTokenCookie) {
+            const res = await refreshToken(refreshTokenCookie)
+
+            if(res?.data?.accessToken && res?.data?.refreshToken){
+                context.cookies.set("access_token", res.data.accessToken, {
+                    httpOnly: true, // Solo accesible por HTTP, no en JavaScript
+                    secure: true,   // Solo se enviará sobre HTTPS
+                    sameSite: "None", // Mejora la seguridad, solo se enviará en solicitudes al mismo origen
+                    maxAge: 60 * 6 ,   // Por ejemplo, 1 hora de duración
+                });
+        
+                context.cookies.set("refresh_token", res.data.refreshToken, {
+                    httpOnly: true, 
+                    secure: true,   
+                    sameSite: "None", 
+                    maxAge: 60 * 129600,  
+                });
+                return {
+                    status: "authorized",
+                    msg: "successfully verified auth token"
+                }
+            }
+        }
+
+    } catch (error) {
+        context.cookies.delete("access_token");
+        context.cookies.delete("refresh_token");
+        return error;
+    }    
+}
+
+
+
+
+
+
+
+
+
+
+
 
 export const onRequest = middleware;
 
-
-
-
-// export async function onRequest({ request, context }) {
-//   // Obtener las cookies de la solicitud
-//   const cookies = request.headers.get('cookie');
-//   const currentUrl = new URL(request.url);
-
-//   // Extraer el token de la cookie 'token'
-//   const token = cookies && cookies.match(/token=([^;]+)/)?.[1];  // Buscar la cookie 'token'
-
-//   // Si no hay token, redirigir al login
-//   if (!token) {
-//     const loginUrl = new URL('/LoginPage', request.url);  // Construir la URL de login con la base de la URL actual
-    
-//     // Evitar redirigir si ya estamos en la página de login
-//     if (currentUrl.pathname === '/LoginPage') {
-//         return new Response(null, { status: 302 }); // Si estamos en la página de login, continuar con la solicitud
-//     }
-    
-//     loginUrl.searchParams.set('redirect', request.url);   // Agregar el path de la URL actual como parámetro de redirección
-//     // Redirigir al login si no hay token
-//     return Response.redirect(loginUrl.toString(), 302);  // Redirige con el código de estado 302
-//   }
-
-//   try {
-//     // Verificar que el token es válido usando la clave secreta
-//     jwt.verify(token, import.meta.env.CLAVE_SECRETA);  // Usar la misma clave secreta que usas para firmar el JWT
-//   } catch (error) {
-//     // Si el token es inválido o ha expirado, redirigir al login
-//     const loginUrl = new URL('/LoginPage', request.url);  // Construir la URL de login con la base de la URL actual
-//     loginUrl.searchParams.set('redirect', request.url);   // Agregar el path de la URL actual como parámetro de redirección
-
-//     return Response.redirect(loginUrl.toString(), 302);  // Redirige con el código de estado 302
-//   }
-
-//   // Si el token es válido, continuar con la solicitud
-//   return new Response(null, { status: 200 });  // Continúa con la solicitud si el token es válido
-// }

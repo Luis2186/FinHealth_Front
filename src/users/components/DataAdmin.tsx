@@ -5,7 +5,7 @@ import { Modal } from './Modal';
 import type { user } from '../types/user';
 import useUserStore from '../store/useUserStore';
 import { useUser } from '../hooks/useUser';
-
+import '../styles/DataAdminStyles.css'
 
 export const DataAdmin = () => {
     const { users } = useUserStore()
@@ -63,7 +63,7 @@ export const DataAdmin = () => {
                     <div className='px-5'>
                         <button
                             onClick={() => { }}
-                            className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                            className="btn_action btn_action_dark"
                             type="button"
                         >
                             Action
@@ -90,7 +90,7 @@ export const DataAdmin = () => {
                         <input
                             type="text"
                             id="table-search-usuarios"
-                            className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className="input_search input_search_dark"
                             placeholder="Buscar usuarios"
                             value={searchQuery}
                             onChange={handleSearchChange}

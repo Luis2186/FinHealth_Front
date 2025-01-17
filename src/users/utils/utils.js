@@ -19,9 +19,25 @@ export const formatDate = (dateString) => {
         const secret = import.meta.env.CLAVE_SECRETA || 'mi_clave_secreta'; 
         // Verifica el token
         const decoded = jwt.verify(token, secret);
+        const expTimestamp = decoded.exp;
+        const currentTimestamp = Math.floor(Date.now() / 1000);
+
+        const expDate = new Date(expTimestamp * 1000);
+        const currentDate =  new Date(); 
+
+        // Calcular la diferencia de tiempo en milisegundos
+        const timeDifference = expDate - currentDate;
+        const timeDifferenceInMinutes = timeDifference / 1000 / 60;
+        let closeToExpiration= false;
+
+        // Comprobar si faltan 5 minutos o menos para la expiración
+        if (timeDifferenceInMinutes <= 5 && timeDifferenceInMinutes > 0) {
+            closeToExpiration = true
+        } 
 
       return {
         status: "authorized",
+        closeToExpiration,
         payload: decoded,
         msg: "successfully verified auth token",
       };
@@ -35,4 +51,10 @@ export const formatDate = (dateString) => {
     
         const tokenValidation = await verifyAuth(token);
         return tokenValidation?.status == "authorized";
+    }
+
+    export const tokencloseToExpiration = async (token) => {
+    
+        const tokenValidation = await verifyAuth(token);
+        return tokenValidation?.closeToExpiration;
     }

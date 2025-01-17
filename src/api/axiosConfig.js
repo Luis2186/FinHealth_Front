@@ -5,7 +5,12 @@ const axiosInstance = axios.create({
   baseURL: import.meta.env.PUBLIC_API_URL, // Utiliza tu variable de entorno para la URL base
   //timeout: 10000,  // Tiempo de espera de 5 segundos (puedes ajustarlo según lo necesites)
   withCredentials : true,
+  headers: {
+    'Content-Type': 'application/json', // Establece el tipo de contenido por defecto
+  }
 });
+
+
 
 // Interceptor para agregar el token de autenticación a todas las solicitudes
 // axiosInstance.interceptors.response.use(

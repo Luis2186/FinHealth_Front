@@ -1,5 +1,11 @@
 import axiosInstance from "../../api/axiosConfig";
 
+const headers = {
+    headers: {
+      'Content-Type': 'application/json' // Asegúrate de que este encabezado esté presente
+    }
+  }
+
 export const register = async (user) => {
     try {
         const response = await axiosInstance.post(`/usuario/registrar`,user) 
@@ -24,6 +30,18 @@ export const logout = async () => {
       const response = await axiosInstance.post('usuario/logout');
  
       return response; 
+    } catch (error) {
+      throw error.response ? error.response.data : error.message; 
+    }
+  };
+
+  export const refreshToken = async (refreshToken) => {
+    try {
+        
+        if(!refreshToken) return
+        const response = await axiosInstance.post('usuario/refresh-token',refreshToken);
+       
+        return response; 
     } catch (error) {
       throw error.response ? error.response.data : error.message; 
     }
