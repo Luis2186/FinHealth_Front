@@ -2,11 +2,7 @@
 import {tokenValid,tokencloseToExpiration } from "../users/utils/utils";
 import Menu from "./Menu.astro";
 import SideBar from "./SideBar/SideBar.astro";
-import {refreshToken} from "../users/api/userApi"
-// Usar variables de entorno en archivos .astro
-const apiUrl = import.meta.env.PUBLIC_API_URL;
-const siteName = import.meta.env.PUBLIC_SITE_NAME;
-
+import '../styles/global.css'
 interface Props {
     title: string;
 }
@@ -14,7 +10,6 @@ interface Props {
 const { title } = Astro.props;
 
 const token = Astro.cookies.get("access_token")?.value ?? "";
-const refreshTokenCookie = Astro.cookies.get("refresh_token")?.value ?? "";
 const tokenValido = await tokenValid(token);
 
 ---
@@ -46,13 +41,14 @@ const tokenValido = await tokenValid(token);
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
             rel="stylesheet"
         />
+
     </head>
     <body>
         {
             tokenValido ? (
-                <div id="app" class="bg-primary-50">
+                <div id="app" class="dark:bg-d-main-background bg-l-main-background">
                   
-                    <SideBar />
+                    <SideBar/>
                     <div class="[grid-area:main] ">
                         <slot />
                     </div>
@@ -66,39 +62,6 @@ const tokenValido = await tokenValid(token);
         }
     </body>
 </html>
-
-<style is:global>
-    html,
-    body {
-        /* background-image: linear-gradient(to top, #7028e4 0%, #e5b2ca 100%); */
-        margin: 0;
-        font-family: system-ui, sans-serif;
-        width: 100%;
-        height: 100%;
-        color: white;
-        font-size: 1rem;
-    }
-
-    #app {
-        display: grid;
-        grid-template-areas:
-            "aside header header"
-            "aside main main";
-        grid-template-columns: 300px 1fr;
-        grid-template-rows: 70px auto;
-    }
-
-    /* Añadir un diseño responsivo usando Tailwind para pantallas grandes */
-    @media (max-width: 768px) {
-        #app {
-            grid-template-areas:
-                " header header"
-                " main main";
-            grid-template-columns: 300px 1fr;
-            grid-template-rows: 70px auto;
-        }
-    }
-</style>
 
 <script>
     var themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");

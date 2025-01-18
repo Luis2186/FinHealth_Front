@@ -2,6 +2,7 @@
 import { verifyAuth } from "../../users/utils/utils";
 import SideBarItem from "./SideBar-item.astro";
 import SideBarItemMenu from "./SideBar-ItemMenu.astro";
+import "../../styles/sideBar.css";
 
 const token = Astro.cookies.get("access_token")?.value ?? "";
 const responseToken = await verifyAuth(token);
@@ -31,14 +32,8 @@ const roles = responseToken?.payload?.roles?.toLowerCase();
     </svg>
 </button>
 
-<aside
-    id="default-sidebar"
-    class="top-0 left-0 z-40 fixed md:relative h-screen transition-transform -translate-x-full sm:translate-x-0 [grid-area:aside] sm:block"
-    aria-label="Sidebar"
->
-    <div
-        class="h-full px-3 overflow-y-auto bg-primary-600 bg-opacity-100 dark:bg-primary-950 dark:bg-opacity-100"
-    >
+<aside id="default-sidebar" class="aside_container" aria-label="Sidebar">
+    <div class="h-full px-3 overflow-y-auto shadow-2xl">
         <div class="flex align-middle h-12 my-3 justify-between">
             <a
                 href="https://flowbite.com"

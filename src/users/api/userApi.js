@@ -36,11 +36,9 @@ export const logout = async () => {
   };
 
   export const refreshToken = async (refreshToken) => {
-    try {
-        
+    try {           
         if(!refreshToken) return
         const response = await axiosInstance.post('usuario/refresh-token',refreshToken);
-       
         return response; 
     } catch (error) {
       throw error.response ? error.response.data : error.message; 

@@ -27,10 +27,10 @@ export const Modal: React.FC<ModalProps> = ({ user, isOpen, onClose, onUpdate })
         <>
             {isOpen && (
                 <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
-                    <div className="relative bg-white rounded-lg shadow-lg max-w-lg w-full p-6 text-black">
-                        <div className="flex justify-between items-center border-b border-indigo-500 pb-4">
-                            <h3 className="text-xl font-semibold text-indigo-600">Actualizar Usuario</h3>
-                            <button onClick={onClose} className="text-indigo-600 hover:text-indigo-800">
+                    <div className="relative bg-white dark:bg-gradient-to-br from-primary-800 to-primary-950 rounded-lg shadow-lg max-w-lg w-full p-6 text-black">
+                        <div className="flex justify-between items-center border-b border-primary-500 pb-4">
+                            <h3 className="text-xl font-semibold text-dark_text_light">Actualizar Usuario</h3>
+                            <button onClick={onClose} className="text-dark_text_light hover:text-primary-800">
                                 <svg className="w-6 h-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                     <path
                                         fillRule="evenodd"
@@ -44,88 +44,88 @@ export const Modal: React.FC<ModalProps> = ({ user, isOpen, onClose, onUpdate })
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-4">
                             {/* Nombre */}
                             <div>
-                                <label htmlFor="nombre" className="block text-sm font-medium text-indigo-600">Nombre</label>
+                                <label htmlFor="nombre" className="block text-sm font-medium text-dark_text_light">Nombre</label>
                                 <input
                                     type="text"
                                     id="nombre"
                                     {...register("nombre")}
-                                    className="mt-1 p-2 block w-full border border-indigo-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                    className="mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
                                 />
                             </div>
 
                             {/* Apellido */}
                             <div>
-                                <label htmlFor="apellido" className="block text-sm font-medium text-indigo-600">Apellido</label>
+                                <label htmlFor="apellido" className="block text-sm font-medium text-dark_text_light">Apellido</label>
                                 <input
                                     type="text"
                                     id="apellido"
                                     {...register("apellido")}
-                                    className="mt-1 p-2 block w-full border border-indigo-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                    className="mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
                                 />
                             </div>
 
                             {/* Edad */}
                             <div>
-                                <label htmlFor="edad" className="block text-sm font-medium text-indigo-600">Edad</label>
+                                <label htmlFor="edad" className="block text-sm font-medium text-dark_text_light">Edad</label>
                                 <input
                                     type="number"
                                     id="edad"
                                     {...register("edad")}
-                                    className="mt-1 p-2 block w-full border border-indigo-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                    className="mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
                                 />
                             </div>
 
                             {/* Nombre de Usuario */}
                             <div>
-                                <label htmlFor="nombreDeUsuario" className="block text-sm font-medium text-indigo-600">Nombre de Usuario</label>
+                                <label htmlFor="nombreDeUsuario" className="block text-sm font-medium text-dark_text_light">Nombre de Usuario</label>
                                 <input
                                     type="text"
                                     id="nombreDeUsuario"
                                     {...register("nombreDeUsuario")}
-                                    className="mt-1 p-2 block w-full border border-indigo-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                    className="mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
                                 />
                             </div>
 
                             {/* Fecha de Nacimiento */}
                             <div>
-                                <label htmlFor="fechaDeNacimiento" className="block text-sm font-medium text-indigo-600">Fecha de Nacimiento</label>
+                                <label htmlFor="fechaDeNacimiento" className="block text-sm font-medium text-dark_text_light">Fecha de Nacimiento</label>
                                 <input
                                     type="date"
                                     id="fechaDeNacimiento"
                                     {...register("fechaDeNacimiento")}
-                                    className="mt-1 p-2 block w-full border border-indigo-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                    className="mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
                                 />
                             </div>
 
                             {/* Teléfono */}
                             <div>
-                                <label htmlFor="telefono" className="block text-sm font-medium text-indigo-600">Teléfono</label>
+                                <label htmlFor="telefono" className="block text-sm font-medium text-dark_text_light">Teléfono</label>
                                 <input
                                     type="text"
                                     id="telefono"
                                     {...register("telefono")}
-                                    className="mt-1 p-2 block w-full border border-indigo-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                    className="mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
                                 />
                             </div>
 
                             {/* Email */}
                             <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-indigo-600">Correo Electrónico</label>
+                                <label htmlFor="email" className="block text-sm font-medium text-dark_text_light">Correo Electrónico</label>
                                 <input
                                     type="email"
                                     id="email"
                                     {...register("email")}
-                                    className="mt-1 p-2 block w-full border border-indigo-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                    className="mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
                                 />
                             </div>
 
                             {/* Activo */}
                             <div>
-                                <label htmlFor="activo" className="block text-sm font-medium text-indigo-600">Activo</label>
+                                <label htmlFor="activo" className="block text-sm font-medium text-dark_text_light">Activo</label>
                                 <select
                                     id="activo"
                                     {...register("activo")}
-                                    className="mt-1 p-2 block w-full border border-indigo-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                                    className="mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
                                 >
                                     <option value="true">Sí</option>
                                     <option value="false">No</option>
@@ -137,13 +137,13 @@ export const Modal: React.FC<ModalProps> = ({ user, isOpen, onClose, onUpdate })
                                 <button
                                     type="button"
                                     onClick={onClose}
-                                    className="px-4 py-2 text-sm text-indigo-600 border border-indigo-300 rounded-md hover:bg-indigo-50"
+                                    className="px-4 py-2 text-sm text-dark_text_light border border-primary-300 rounded-md hover:bg-primary-50"
                                 >
                                     Cancelar
                                 </button>
                                 <button
                                     type="submit"
-                                    className="px-4 py-2 text-sm text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500"
+                                    className="px-4 py-2 text-sm text-white bg-primary-600 rounded-md hover:bg-primary-700 focus:ring-2 focus:ring-primary-500"
                                 >
                                     Actualizar
                                 </button>

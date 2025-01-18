@@ -58,7 +58,7 @@ export const DataAdmin = () => {
     return (
         <div className='container mx-auto py-20' >
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg " >
-                <div className="flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-primary-600 dark:bg-gray-900">
+                <div className="flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-l-gradient-asideMenu dark:bg-gradient-to-br from-primary-800 to-primary-950">
                     {/* Botón de acción */}
                     <div className='px-5'>
                         <button
@@ -99,8 +99,8 @@ export const DataAdmin = () => {
                 </div>
 
                 {/* Tabla de usuarios */}
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <table className="w-full text-sm text-left rtl:text-right text-primary-500 dark:text-primary-400 ">
+                    <thead className="text-xs text-primary-700 uppercase bg-primary-50 dark:bg-primary-700 dark:text-primary-400">
                         <tr>
                             {/* <th scope="col" className="p-4">
                                 <div className="flex items-center">
@@ -121,7 +121,7 @@ export const DataAdmin = () => {
                     </thead>
                     <tbody>
                         {filteredUsers.map((user) => (
-                            <tr key={user.id} className="bg-primary-50 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <tr key={user.id} className="bg-primary-50 border-b dark:bg-primary-950 dark:border-primary-700 hover:bg-gray-50 dark:hover:bg-primary-700">
                                 {/* <td className="w-4 p-4">
                                     <div className="flex items-center">
                                         <input
@@ -133,11 +133,11 @@ export const DataAdmin = () => {
                                     </div>
                                 </td> */}
 
-                                <th className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                <th className="flex items-center px-6 py-4 text-dark_text_light whitespace-nowrap dark:text-dark_text">
                                     {/* <img className="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="User" /> */}
                                     <div className="ps-3">
                                         <div className="text-base font-semibold">{user.nombreDeUsuario}</div>
-                                        <div className="font-normal text-gray-500">{user.email}</div>
+                                        <div className="font-normal text-primary-500">{user.email}</div>
                                     </div>
                                 </th>
 
@@ -155,15 +155,15 @@ export const DataAdmin = () => {
                                 <td className="px-2 py-4">
                                     <button
                                         onClick={() => handleModal(user)}
-                                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                        className="font-medium text-light_text dark:text-dark_text hover:underline"
                                     >
-                                        <FontAwesomeIcon icon={faUserPen} className='fa-xl pr-5 text-indigo-500' />
+                                        <FontAwesomeIcon icon={faUserPen} className='fa-xl pr-5 text-primary-300' />
                                     </button>
 
                                     <button
                                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                     >
-                                        <FontAwesomeIcon icon={faUserGear} className='fa-xl text-indigo-500 pr-5' />
+                                        <FontAwesomeIcon icon={faUserGear} className='fa-xl text-primary-300 pr-5' />
                                     </button>
 
                                     <button

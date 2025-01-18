@@ -1,17 +1,18 @@
 ---
 const { title, ref, id } = Astro.props;
+import "../../styles/sideBar.css";
 ---
 
 <li>
     <a
         id={id}
         href={ref}
-        class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-primary-800 dark:hover:bg-primary-700"
+        class="aside_btn_Item-dark-mode aside_btn_Item-light-mode"
     >
         <slot name="after-title" />
-        <span class="flex-1 ms-3 whitespace-nowrap text-white dark:text-white"
-            >{title}</span
-        >
+        <span>{title}</span>
         <slot name="before-title" />
     </a>
 </li>
+
+<style></style>

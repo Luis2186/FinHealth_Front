@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
   withCredentials : true,
   headers: {
     'Content-Type': 'application/json', // Establece el tipo de contenido por defecto
-  }
+  },
 });
 
 

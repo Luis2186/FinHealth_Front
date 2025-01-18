@@ -1,0 +1,36 @@
+.aside_container {
+    @apply top-0 left-0 z-40 fixed md:relative h-screen transition-transform -translate-x-full sm:translate-x-0 [grid-area:aside] sm:block dark:bg-d-gradient-asideMenu bg-l-gradient-asideMenu
+}
+
+/*Aside Menu items  */
+
+.aside_ItemMenu {
+    @apply flex items-center w-full p-2 text-base rounded-lg text-white transition duration-75 hover:bg-light_hover
+}
+
+.aside_ItemMenu-dark-mode {
+    @apply dark:text-dark_text_light dark:hover:bg-dark_hover
+}
+
+.aside_ItemMenu>span {
+    @apply flex-1 ms-3 text-left rtl:text-right whitespace-nowrap
+}
+
+
+/*Aside Menu Subitems */
+
+.aside_btn_Item-dark-mode {
+    @apply dark:text-dark_text_light dark:hover:bg-dark_hover
+}
+
+.aside_btn_Item-light-mode {
+    @apply flex items-center p-2 rounded-lg text-white hover:bg-light_hover
+}
+
+.aside_btn_Item-dark-mode>span {
+    @apply dark:text-dark_text_light
+}
+
+.aside_btn_Item-light-mode>span {
+    @apply flex-1 ms-3 whitespace-nowrap text-white
+}
