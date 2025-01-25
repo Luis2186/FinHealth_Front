@@ -1,6 +1,6 @@
 // Asegúrate de tener jwt en tu proyecto
 import { refreshToken } from '../users/api/userApi';
-import { tokencloseToExpiration, verifyAuth } from '../users/utils/utils';
+import { tokencloseToExpiration, verifyAuth } from '../users/utils/utils.js';
 
 const rutasPermitidasAdministrador = [
     "/AdminUsersPage",
@@ -17,16 +17,17 @@ const routesWithoutAuthentication  = [
 
 const middleware = async (context, next) => {
 
-    const cookies = context.request.headers.get("Cookie");
-    let token = cookies && cookies.match(/access_token=([^;]+)/)?.[1];
     const routesWithoutAuth = routesWithoutAuthentication?.some(ruta => context.request.url.includes(ruta));
-  
       // Deja pasar sin verificar el token las paginas incluidas
     if (routesWithoutAuth) {
         // Si ya está en la página de login, no hacemos nada
         return next();
     }
- 
+
+    const cookies = context.request.headers.get("Cookie");
+    let token = cookies && cookies.match(/access_token=([^;]+)/)?.[1];
+
+    console.log(token)
     let validationResult = await verifyAuth(token);
     const tokenCloseToExpiration = validationResult.closeToExpiration
    

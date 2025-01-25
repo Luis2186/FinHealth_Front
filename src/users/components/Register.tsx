@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import useAuthStore from '../store/useAuthStore';
 import Datepicker from './DatePicker';
-import InputForm from './InputForm';
+import { InputForm } from '../../components/Modals/Form/inputForm';
 import { useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { schemaRegister } from '../validation/userValidationSchema';
 import { useAuth } from '../hooks/useAuth';
-import { formatDate } from '../utils/utils';
 
 interface IFormInput {
     userName: string;
@@ -16,8 +15,20 @@ interface IFormInput {
     firstName: string;
     lastName: string;
     phone: string;
-    bornDate: string;
+    bornDate: string | '';
 }
+
+const formatDate = (dateString: string) => {
+    if (!dateString) return '';
+    const [month, day, year] = dateString.split("/"); // Dividir por "/"
+
+    return `${year}-${month}-${day}`; // Reordenar en formato "aaaa-mm-dd"
+};
+
+const classNameLabel = 'peer-focus:font-medium absolute text-lg text-white dark:text-blue-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-primary-200 peer-focus:dark:text-primary-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6';
+const classNameInput = 'block py-2.5 px-0 w-full text-md text-primary-200 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-primary-600 peer';
+const classNameContainer = 'relative z-0 w-full mb-5 group';
+
 
 const Register = () => {
     // Estado de la autenticación
@@ -54,7 +65,7 @@ const Register = () => {
             confirmacionPassword: data.confirmPassword,
             rol: "Usuario"
         }
-
+        console.log(userRegister)
         await handleRegister(userRegister);
     };
 
@@ -77,18 +88,25 @@ const Register = () => {
             <div className="h-4/5 w-full max-w-xl p-4  border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-indigo-950 dark:border-white-700 bg-indigo-950 bg-opacity-40">
                 <form className="max-w-md mx-auto flex flex-col justify-between h-full" onSubmit={handleSubmit(onSubmit)}>
 
-                    <InputForm type="text" name='userName' id='userName' label='Nombre de usuario' register={register} error={errors.userName} />
-                    <InputForm type="email" name='email' id='email' label='Correo' error={errors.email} register={register} />
-                    <InputForm type="password" name='password' id='password' label='Contraseña' register={register} error={errors.password} />
-                    <InputForm type="password" name='confirmPassword' id='confirmPassword' label='Confirmar contraseña' register={register} error={errors.confirmPassword} />
+                    <InputForm type="text" name='userName' label='Nombre de usuario' register={register} errors={errors.userName}
+                        classNameContainer={classNameContainer} classNameInput={classNameInput} classNameLabel={classNameLabel} />
+                    <InputForm type="email" name='email' label='Correo' errors={errors.email} register={register}
+                        classNameContainer={classNameContainer} classNameInput={classNameInput} classNameLabel={classNameLabel} />
+                    <InputForm type="password" name='password' label='Contraseña' register={register} errors={errors.password}
+                        classNameContainer={classNameContainer} classNameInput={classNameInput} classNameLabel={classNameLabel} />
+                    <InputForm type="password" name='confirmPassword' label='Confirmar contraseña' register={register} errors={errors.confirmPassword}
+                        classNameContainer={classNameContainer} classNameInput={classNameInput} classNameLabel={classNameLabel} />
 
                     <div className="grid md:grid-cols-2 md:gap-6">
-                        <InputForm type="text" name='firstName' id='firstName' label='Nombres' register={register} error={errors.firstName} />
-                        <InputForm type="text" name='lastName' id='lastName' label='Apellidos' register={register} error={errors.lastName} />
+                        <InputForm type="text" name='firstName' label='Nombres' register={register} errors={errors.firstName}
+                            classNameContainer={classNameContainer} classNameInput={classNameInput} classNameLabel={classNameLabel} />
+                        <InputForm type="text" name='lastName' label='Apellidos' register={register} errors={errors.lastName}
+                            classNameContainer={classNameContainer} classNameInput={classNameInput} classNameLabel={classNameLabel} />
                     </div>
 
                     <div className="grid md:grid-cols-2 md:gap-6">
-                        <InputForm type="tel" name='phone' id='phone' label='Teléfono' pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" register={register} error={errors.phone} />
+                        <InputForm type="tel" name='phone' label='Teléfono' pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" register={register} errors={errors.phone}
+                            classNameContainer={classNameContainer} classNameInput={classNameInput} classNameLabel={classNameLabel} />
                         <Datepicker register={register} error={errors.bornDate} />
                     </div>
 

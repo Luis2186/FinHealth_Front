@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type { user } from '../types/user';
-import { useUser } from '../hooks/useUser';
-
+import { InputForm } from '../../components/Modals/Form/inputForm';
 
 interface ModalProps {
     user: user;
@@ -42,95 +41,15 @@ export const Modal: React.FC<ModalProps> = ({ user, isOpen, onClose, onUpdate })
                         </div>
 
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-4">
-                            {/* Nombre */}
-                            <div>
-                                <label htmlFor="nombre" className="block text-sm font-medium text-dark_text_light">Nombre</label>
-                                <input
-                                    type="text"
-                                    id="nombre"
-                                    {...register("nombre")}
-                                    className="mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-                                />
-                            </div>
 
-                            {/* Apellido */}
-                            <div>
-                                <label htmlFor="apellido" className="block text-sm font-medium text-dark_text_light">Apellido</label>
-                                <input
-                                    type="text"
-                                    id="apellido"
-                                    {...register("apellido")}
-                                    className="mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-                                />
-                            </div>
-
-                            {/* Edad */}
-                            <div>
-                                <label htmlFor="edad" className="block text-sm font-medium text-dark_text_light">Edad</label>
-                                <input
-                                    type="number"
-                                    id="edad"
-                                    {...register("edad")}
-                                    className="mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-                                />
-                            </div>
-
-                            {/* Nombre de Usuario */}
-                            <div>
-                                <label htmlFor="nombreDeUsuario" className="block text-sm font-medium text-dark_text_light">Nombre de Usuario</label>
-                                <input
-                                    type="text"
-                                    id="nombreDeUsuario"
-                                    {...register("nombreDeUsuario")}
-                                    className="mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-                                />
-                            </div>
-
-                            {/* Fecha de Nacimiento */}
-                            <div>
-                                <label htmlFor="fechaDeNacimiento" className="block text-sm font-medium text-dark_text_light">Fecha de Nacimiento</label>
-                                <input
-                                    type="date"
-                                    id="fechaDeNacimiento"
-                                    {...register("fechaDeNacimiento")}
-                                    className="mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-                                />
-                            </div>
-
-                            {/* Teléfono */}
-                            <div>
-                                <label htmlFor="telefono" className="block text-sm font-medium text-dark_text_light">Teléfono</label>
-                                <input
-                                    type="text"
-                                    id="telefono"
-                                    {...register("telefono")}
-                                    className="mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-                                />
-                            </div>
-
-                            {/* Email */}
-                            <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-dark_text_light">Correo Electrónico</label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    {...register("email")}
-                                    className="mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-                                />
-                            </div>
-
-                            {/* Activo */}
-                            <div>
-                                <label htmlFor="activo" className="block text-sm font-medium text-dark_text_light">Activo</label>
-                                <select
-                                    id="activo"
-                                    {...register("activo")}
-                                    className="mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-                                >
-                                    <option value="true">Sí</option>
-                                    <option value="false">No</option>
-                                </select>
-                            </div>
+                            <InputForm label='Nombre' name='nombre' register={register} errors={errors.nombre} type='text' />
+                            <InputForm label='Apellido' name='apellido' register={register} errors={errors.apellido} type='text' />
+                            <InputForm label='Edad' name='edad' register={register} errors={errors.edad} type='text' />
+                            <InputForm label='Nombre de usuario' name='nombreDeUsuario' register={register} errors={errors.nombreDeUsuario} type='text' />
+                            <InputForm label='Fecha de nacimiento' name='fechaDeNacimiento' register={register} errors={errors.fechaDeNacimiento} type='date' />
+                            <InputForm label='Teléfono' name='telefono' register={register} errors={errors.telefono} type='text' />
+                            <InputForm label='Email' name='email' register={register} errors={errors.email} type='text' />
+                            <InputForm label='Activo' name='activo' register={register} errors={errors.activo} type='select' options={["Si", "No"]} />
 
                             <div className="flex justify-end space-x-4 mt-6">
                                 {/* Botones */}

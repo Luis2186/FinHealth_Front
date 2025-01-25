@@ -63,7 +63,7 @@ export const useAuth = () => {
         onLogout(err);
 
     } finally {
-        setLoading(false);
+       
     }
   };
   
