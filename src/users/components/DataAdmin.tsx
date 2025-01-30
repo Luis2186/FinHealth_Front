@@ -99,8 +99,8 @@ export const DataAdmin = () => {
                 </div>
 
                 {/* Tabla de usuarios */}
-                <table className="w-full text-sm text-left rtl:text-right text-primary-500 dark:text-primary-400 ">
-                    <thead className="text-xs text-primary-700 uppercase bg-primary-50 dark:bg-primary-700 dark:text-primary-400">
+                <table className="w-full text-sm text-left rtl:text-right text-light_text dark:text-dark_text ">
+                    <thead className="text-xs text-light_text uppercase bg-primary-50 dark:bg-dark_main/85 dark:text-dark_text">
                         <tr>
                             {/* <th scope="col" className="p-4">
                                 <div className="flex items-center">
@@ -121,7 +121,7 @@ export const DataAdmin = () => {
                     </thead>
                     <tbody>
                         {filteredUsers.map((user) => (
-                            <tr key={user.id} className="bg-primary-50 border-b dark:bg-primary-950 dark:border-primary-700 hover:bg-gray-50 dark:hover:bg-primary-700">
+                            <tr key={user.id} className="bg-primary-50 border-b dark:bg-primary-950 dark:border-primary-700 hover:bg-gray-50 dark:hover:bg-primary-700 text-light_text dark:text-dark_text">
                                 {/* <td className="w-4 p-4">
                                     <div className="flex items-center">
                                         <input
@@ -133,11 +133,11 @@ export const DataAdmin = () => {
                                     </div>
                                 </td> */}
 
-                                <th className="flex items-center px-6 py-4 text-dark_text_light whitespace-nowrap dark:text-dark_text">
+                                <th className="flex items-center px-6 py-4 text-light_text whitespace-nowrap dark:text-dark_text">
                                     {/* <img className="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-1.jpg" alt="User" /> */}
                                     <div className="ps-3">
-                                        <div className="text-base font-semibold">{user.nombreDeUsuario}</div>
-                                        <div className="font-normal text-primary-500">{user.email}</div>
+                                        <div className="text-base font-semibold ">{user.nombreDeUsuario}</div>
+                                        <div className="font-normal text-light_text_light dark:text-dark_text_light/80">{user.email}</div>
                                     </div>
                                 </th>
 
@@ -157,20 +157,20 @@ export const DataAdmin = () => {
                                         onClick={() => handleModal(user)}
                                         className="font-medium text-light_text dark:text-dark_text hover:underline"
                                     >
-                                        <FontAwesomeIcon icon={faUserPen} className='fa-xl pr-5 text-primary-300' />
+                                        <FontAwesomeIcon icon={faUserPen} className='fa-xl pr-5 text-light_icons dark:text-dark_icons' />
                                     </button>
 
                                     <button
                                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                     >
-                                        <FontAwesomeIcon icon={faUserGear} className='fa-xl text-primary-300 pr-5' />
+                                        <FontAwesomeIcon icon={faUserGear} className='fa-xl text-light_icons pr-5 dark:text-dark_icons' />
                                     </button>
 
                                     <button
                                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                         onClick={() => handleRemoveUser(user.id)}
                                     >
-                                        <FontAwesomeIcon icon={faTrashCan} className='fa-xl text-red-500 pr-5' />
+                                        <FontAwesomeIcon icon={faTrashCan} className='fa-xl text-red-600 pr-5 dark:text-red-500' />
                                     </button>
                                 </td>
                             </tr>
