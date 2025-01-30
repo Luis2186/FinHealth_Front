@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import useAuthStore from '../store/useAuthStore';
 import Datepicker from './DatePicker';
-import { InputForm } from '../../components/Modals/Form/inputForm';
+import { InputForm } from '../../components/Modals/Form/InputForm';
 import { useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { schemaRegister } from '../validation/userValidationSchema';
@@ -88,24 +88,24 @@ const Register = () => {
             <div className="h-4/5 w-full max-w-xl p-4  border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-indigo-950 dark:border-white-700 bg-indigo-950 bg-opacity-40">
                 <form className="max-w-md mx-auto flex flex-col justify-between h-full" onSubmit={handleSubmit(onSubmit)}>
 
-                    <InputForm type="text" name='userName' label='Nombre de usuario' register={register} errors={errors.userName}
+                    <InputForm type="text" name='userName' label='Nombre de usuario' register={register} errors={errors.userName} floating
                         classNameContainer={classNameContainer} classNameInput={classNameInput} classNameLabel={classNameLabel} />
-                    <InputForm type="email" name='email' label='Correo' errors={errors.email} register={register}
+                    <InputForm type="email" name='email' label='Correo' errors={errors.email} register={register} floating
                         classNameContainer={classNameContainer} classNameInput={classNameInput} classNameLabel={classNameLabel} />
-                    <InputForm type="password" name='password' label='Contraseña' register={register} errors={errors.password}
+                    <InputForm type="password" name='password' label='Contraseña' register={register} errors={errors.password} floating
                         classNameContainer={classNameContainer} classNameInput={classNameInput} classNameLabel={classNameLabel} />
-                    <InputForm type="password" name='confirmPassword' label='Confirmar contraseña' register={register} errors={errors.confirmPassword}
+                    <InputForm type="password" name='confirmPassword' label='Confirmar contraseña' register={register} errors={errors.confirmPassword} floating
                         classNameContainer={classNameContainer} classNameInput={classNameInput} classNameLabel={classNameLabel} />
 
                     <div className="grid md:grid-cols-2 md:gap-6">
-                        <InputForm type="text" name='firstName' label='Nombres' register={register} errors={errors.firstName}
+                        <InputForm type="text" name='firstName' label='Nombres' register={register} errors={errors.firstName} floating
                             classNameContainer={classNameContainer} classNameInput={classNameInput} classNameLabel={classNameLabel} />
-                        <InputForm type="text" name='lastName' label='Apellidos' register={register} errors={errors.lastName}
+                        <InputForm type="text" name='lastName' label='Apellidos' register={register} errors={errors.lastName} floating
                             classNameContainer={classNameContainer} classNameInput={classNameInput} classNameLabel={classNameLabel} />
                     </div>
 
                     <div className="grid md:grid-cols-2 md:gap-6">
-                        <InputForm type="tel" name='phone' label='Teléfono' pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" register={register} errors={errors.phone}
+                        <InputForm type="tel" name='phone' label='Teléfono' pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" register={register} errors={errors.phone} floating
                             classNameContainer={classNameContainer} classNameInput={classNameInput} classNameLabel={classNameLabel} />
                         <Datepicker register={register} error={errors.bornDate} />
                     </div>

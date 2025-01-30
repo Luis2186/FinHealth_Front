@@ -6,6 +6,7 @@ import type { user } from '../types/user';
 import useUserStore from '../store/useUserStore';
 import { useUser } from '../hooks/useUser';
 import '../styles/DataAdminStyles.css'
+import { UserModal } from './UserModal';
 
 export const DataAdmin = () => {
     const { users } = useUserStore()
@@ -178,7 +179,7 @@ export const DataAdmin = () => {
                     </tbody>
                 </table>
                 {isModalOpen && selectedUser &&
-                    <Modal
+                    <UserModal
                         user={selectedUser}
                         isOpen={isModalOpen}
                         onClose={() => setIsModalOpen(false)}

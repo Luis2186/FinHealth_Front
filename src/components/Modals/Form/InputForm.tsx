@@ -7,33 +7,41 @@ interface InputFormProps<T extends FieldValues> {
     register: UseFormRegister<T>;
     errors: FieldError | undefined;
     options?: string[]; // Solo para campos select
-    placeholder?: string; // Placeholder para los campos de texto
+    placeholder?: string | undefined; // Placeholder para los campos de texto
     maxLength?: number; // Para campos de texto con límite de caracteres
     pattern?: string,
     checkedValue?: string | boolean; // Para manejar valores checked en checkbox y radio
     classNameInput?: string | undefined;
     classNameLabel?: string | undefined;
     classNameContainer?: string | "";
+    floating: boolean
 }
 
 export const InputForm = <T extends FieldValues>({
     label,
     classNameInput = 'mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500',
-    classNameLabel = 'block text-sm font-medium text-dark_text_light',
+    classNameLabel = 'block text-sm font-medium text-primary-700 dark:text-dark_text',
     classNameContainer = '',
     name,
     type,
     register,
     errors,
     options,
-    placeholder = '',
+    placeholder = "",
     pattern,
     maxLength,
     checkedValue,
+    floating = false
 }: InputFormProps<T>) => {
+
     return (
         <div className={classNameContainer}>
 
+            {!floating &&
+                <label htmlFor={name} className={classNameLabel}>
+                    {label}
+                </label>
+            }
 
             {/* Campo select */}
             {type === 'select' ? (
@@ -71,9 +79,12 @@ export const InputForm = <T extends FieldValues>({
                             className={classNameInput}
                         />
                     )}
-            <label htmlFor="floating_email" className={classNameLabel}>
-                {label}
-            </label>
+
+            {floating &&
+                <label htmlFor="floating_email" className={classNameLabel}>
+                    {label}
+                </label>
+            }
             {errors && <p className="text-red-500 text-xs">{errors.message}</p>}
         </div>
     );
