@@ -7,47 +7,50 @@ import useUserStore from '../store/useUserStore';
 import { useUser } from '../hooks/useUser';
 import '../styles/DataAdminStyles.css'
 import { UserModal } from './UserModal';
+import { RolesModal } from './RolesModal';
 
-export const DataAdmin = () => {
+export const UserAdministration = () => {
     const { users } = useUserStore()
     const { handleGetAllUsers, handleUpdate, handleRemoveUser } = useUser();
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalUserOpen, setIsModalUserOpen] = useState(false);
+    const [isModalRolesOpen, setIsModalRolesOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedUser, setSelectedUser] = useState<user>();
 
     useEffect(() => {
+
+        // Función para obtener los usuarios
+        const fetchUsers = async () => {
+            try {
+                await handleGetAllUsers();
+            } catch (error) {
+                console.error("Error fetching usuarios:", error);
+            }
+        };
+
         fetchUsers()
-    }, [])
+    }, [users])
 
     useEffect(() => {
     }, [users])
 
-    // Función para obtener los usuarios
-    const fetchUsers = async () => {
-        try {
-            await handleGetAllUsers();
-        } catch (error) {
-            console.error("Error fetching usuarios:", error);
-        }
-    };
+
 
     const handleModal = (usuario: user) => {
         setSelectedUser(usuario)
-        setIsModalOpen(!isModalOpen)
+        setIsModalUserOpen(!isModalUserOpen)
     }
 
+    const handleModalRoles = (usuario: user) => {
+        setSelectedUser(usuario)
+        setIsModalRolesOpen(!isModalRolesOpen)
+    }
 
     // Función para manejar la búsqueda
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(event.target.value);
     };
 
-    // // Datos de ejemplo para la tabla
-    // const usuarios = [
-    //     { id: 1, name: 'Neil Sims', position: 'React Developer', email: 'neil.sims@flowbite.com', status: 'Online' },
-    //     { id: 2, name: 'John Doe', position: 'Backend Developer', email: 'john.doe@company.com', status: 'Offline' },
-    //     // Agregar más usuarios aquí...
-    // ];
 
     // Filtrar los usuarios por la búsqueda
     const filteredUsers = users.filter(user =>
@@ -162,6 +165,7 @@ export const DataAdmin = () => {
                                     </button>
 
                                     <button
+                                        onClick={() => handleModalRoles(user)}
                                         className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                                     >
                                         <FontAwesomeIcon icon={faUserGear} className='fa-xl text-light_icons pr-5 dark:text-dark_icons' />
@@ -178,14 +182,26 @@ export const DataAdmin = () => {
                         ))}
                     </tbody>
                 </table>
-                {isModalOpen && selectedUser &&
+                {isModalUserOpen && selectedUser &&
                     <UserModal
                         user={selectedUser}
-                        isOpen={isModalOpen}
-                        onClose={() => setIsModalOpen(false)}
+                        isOpen={isModalUserOpen}
+                        onClose={() => setIsModalUserOpen(false)}
                         onUpdate={handleUpdate}
                     />
                 }
+
+                {isModalRolesOpen && selectedUser &&
+                    <RolesModal
+                        user={selectedUser}
+                        isOpen={isModalRolesOpen}
+                        onClose={() => setIsModalRolesOpen(false)}
+                    // onUpdate={handleUpdate}
+                    />
+                }
+
+
+
             </div>
         </div>
     );

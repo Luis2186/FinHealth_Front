@@ -1,12 +1,17 @@
 import type { FieldValues, UseFormRegister, FieldError, Path } from 'react-hook-form';
 
+interface Option {
+    value: string;
+    label: string;
+}
+
 interface InputFormProps<T extends FieldValues> {
     label: string;
     name: Path<T>;
     type: string;
     register: UseFormRegister<T>;
     errors: FieldError | undefined;
-    options?: string[]; // Solo para campos select
+    options?: Option[]; // Solo para campos select
     placeholder?: string | undefined; // Placeholder para los campos de texto
     maxLength?: number; // Para campos de texto con límite de caracteres
     pattern?: string,
@@ -19,8 +24,8 @@ interface InputFormProps<T extends FieldValues> {
 
 export const InputForm = <T extends FieldValues>({
     label,
-    classNameInput = 'mt-1 p-2 block w-full border border-primary-300 rounded-md focus:ring-primary-500 focus:border-primary-500',
-    classNameLabel = 'block text-sm font-medium text-primary-700 dark:text-dark_text',
+    classNameInput = 'mt-1 p-2 block w-full border border-primary-700 rounded-md focus:ring-primary-700 focus:border-primary-700 dark:bg-primary-600 dark:text-dark_text',
+    classNameLabel = 'block text-sm font-medium text-primary-700 dark:text-dark_text ',
     classNameContainer = '',
     name,
     type,
@@ -51,8 +56,8 @@ export const InputForm = <T extends FieldValues>({
                     className={classNameInput}
                 >
                     {options?.map((option, index) => (
-                        <option key={index} value={option}>
-                            {option}
+                        <option key={index} value={option.value}>
+                            {option.label}
                         </option>
                     ))}
                 </select>

@@ -21,7 +21,7 @@ axiosInstance.interceptors.response.use(
         console.log(error)
       if (error.response && error.response.status === 401) {
         // Token inválido o expirado. Redirigiendo al login.
-        window.location.href = '/LoginPage'; // Usando window.location para redirigir
+        window.location.href = '/SignIn'; // Usando window.location para redirigir
       }
 
     //   if (error.code == 'ERR_NETWORK' ) {

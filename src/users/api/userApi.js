@@ -105,6 +105,15 @@ export const getRolesbyUser = async (idUser) => {
     }
 };
 
+export const getRoles = async () => {
+    try {
+        const response = await axiosInstance.get(`/usuario/obtenerRoles`)
+
+        return response.data;
+    } catch (error) {
+        throw error.response ? error.response.data : error.message;
+    }
+};
 
 export const addRol = async (idUsuario,idRol,nombreRol) => {
     try {
@@ -114,8 +123,8 @@ export const addRol = async (idUsuario,idRol,nombreRol) => {
             nombreRol
         }
 
-        const response = await axiosInstance.post(`/usuario/registrar`,agregarRolData)
-
+        console.log(agregarRolData)
+        const response = await axiosInstance.post(`/usuario/agregarRol`,agregarRolData)
         return response.data;
 
     } catch (error) {          
@@ -126,13 +135,10 @@ export const addRol = async (idUsuario,idRol,nombreRol) => {
 
 export const RemoveRol = async (idUsuario,idRol,nombreRol) => {
     try {
-        const removerRolData= {
-            idUsuario,
-            idRol,
-            nombreRol
-        }
+        if (!idUsuario || (!idRol && !nombreRol) ) return 
         
-        const response = await axiosInstance.post(`/usuario/eliminarRol`,removerRolData)
+        const response = await axiosInstance.delete(`/usuario/eliminarRol/${idUsuario}/${"idRol"}/${nombreRol}`)
+        console.log(response)
 
         return response.data;
 

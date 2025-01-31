@@ -30,7 +30,7 @@ export const UserModal: React.FC<UserModalProps> = ({ user, isOpen, onClose, onU
             <InputForm label="Fecha de nacimiento" name="fechaDeNacimiento" register={register} errors={errors.fechaDeNacimiento} type="date" floating={false} />
             <InputForm label="Teléfono" name="telefono" register={register} errors={errors.telefono} type="text" floating={false} />
             <InputForm label="Email" name="email" register={register} errors={errors.email} type="text" floating={false} />
-            <InputForm label="Activo" name="activo" register={register} errors={errors.activo} type="select" options={["Si", "No"]} floating={false} />
+            <InputForm label="Activo" name="activo" register={register} errors={errors.activo} type="select" options={[{ value: "true", label: "Si" }, { value: "false", label: "No" },]} floating={false} />
         </Modal>
     );
 };

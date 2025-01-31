@@ -1,12 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { getUsers } from "../users/api/userApi";
-import { DataAdmin } from "../users/components/DataAdmin";
+import { UserAdministration } from "../users/components/UserAdministration";
 ---
 
 <Layout title={"Login"}>
     <h1 class="text-5xl text-center p-10 text-light_title dark:text-dark_title">
         Administracion de usuarios
     </h1>
-    <DataAdmin client:load />
+    <UserAdministration client:load />
 </Layout>

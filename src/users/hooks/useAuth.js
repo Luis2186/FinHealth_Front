@@ -18,12 +18,12 @@ export const useAuth = () => {
 
         // Llama a la API para hacer login
         const response = await login(email, password);
-
+        console.log(response)
         const usuario = await getUserById(response.id);
         
         onLogin(usuario); // Guarda el usuario y el token en el estado global
 
-        window.location.href = "/AdminUsersPage"; // Redirigir al home después de login
+        window.location.href = "/Categories"; // Redirigir al home después de login
 
     } catch (err) {
         onLogout(err);

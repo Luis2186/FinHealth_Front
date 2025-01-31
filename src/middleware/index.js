@@ -4,17 +4,17 @@ import axios from 'axios';
 import https from 'https';
 
 const rutasPermitidasAdministrador = [
-    "/AdminUsersPage",
+    "/UsersAdministration",
     "/CategoriesPage",
 ];
 
 const routesUsers = [
-    "/AdminUsersPage",
+    "/UsersAdministration",
 ];
 
 const routesWithoutAuthentication  = [
-    "/LoginPage",
-    "/RegisterPage"
+    "/SignIn",
+    "/SignUp"
 ];
 
 const middleware = async (context, next) => {
@@ -22,7 +22,7 @@ const middleware = async (context, next) => {
     const routesWithoutAuth = routesWithoutAuthentication?.some(ruta => context.request.url.includes(ruta));
       // Deja pasar sin verificar el token las paginas incluidas
     if (routesWithoutAuth) {
-        // Si ya está en la página de login, no hacemos nada
+        // Si ya está en la página de SignIn, no hacemos nada
         return next();
     }
 
@@ -35,18 +35,18 @@ const middleware = async (context, next) => {
     if (validationResult.status == "unauthorized" || tokenCloseToExpiration) {
         const response = await validateAndRefreshToken(context)
         
-        if(response?.status == 404) return Response.redirect(new URL("/LoginPage", context.url), 302);
+        if(response?.status == 404) return Response.redirect(new URL("/SignIn", context.url), 302);
 
         //return Response.redirect(new URL(context.url), 302);
         return next();
     }
 
-    if(validationResult?.payload?.roles)
+    if(validationResult && validationResult?.payload?.roles)
     {
-        const roles = validationResult?.payload.roles.toLowerCase();
+        const roles = validationResult?.payload.roles;
         const esRutaDeAdministrador = rutasPermitidasAdministrador?.some(ruta => context.request.url.includes(ruta));
 
-        if( esRutaDeAdministrador && roles != "sys_adm") return Response.redirect(new URL("/LoginPage", context.url), 302);
+        if( esRutaDeAdministrador && !roles.includes("sys_adm") && !roles.includes("administrador")) return Response.redirect(new URL("/SignIn", context.url), 302);
 
         if (validationResult) {
            
@@ -54,7 +54,7 @@ const middleware = async (context, next) => {
         }
     }
 
-    return Response.redirect(new URL("/LoginPage", context.url), 302);
+    return Response.redirect(new URL("/SignIn", context.url), 302);
 };
 
 

@@ -36,12 +36,16 @@ import jwt from 'jsonwebtoken';
             closeToExpiration = true
         } 
 
-      return {
-        status: "authorized",
-        closeToExpiration,
-        payload: decoded,
-        msg: "successfully verified auth token",
-      };
+        decoded.roles = Array.isArray(decoded?.roles)
+        ? decoded.roles.map((rol) => rol.toLowerCase())
+        : [decoded.roles.toLowerCase()];
+
+        return {
+            status: "authorized",
+            closeToExpiration,
+            payload: decoded,
+            msg: "successfully verified auth token",
+        };
     } catch (err) {
         console.debug(err);
         return { status: "error", msg: "could not validate auth token" };

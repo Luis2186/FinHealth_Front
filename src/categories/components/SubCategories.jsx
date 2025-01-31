@@ -36,7 +36,7 @@ export const SubCategories = ({subCategories}) => {
             </thead>
             <tbody>
                 {subCategories?.map(cat => (
-                     <tr className="table-tr">
+                     <tr className="table-tr" key={cat.id}>
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                            {cat.nombre}
                         </th>

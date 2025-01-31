@@ -13,6 +13,8 @@ interface UserStoreState {
     onRegister: (user: user) => void;
     onRemoveUser: (userId: string) => void;
     onUpdateUser: (userId: string, updatedUser: Partial<user>) => void;
+    onAddRolUser: (userId: string, rol: string) => void;
+    onRemoveRolUser: (userId: string, rol: string) => void;
     onError: (error: errorMessage) => void;
 }
 
@@ -53,8 +55,35 @@ const useUserStore = create<UserStoreState>((set) => ({
             ...state,
             errorMessage: error
         }))
-    }
-
+    },
+    // Función para agregar rol a un usuario
+    onAddRolUser: (userId, rol) => {
+        set((state) => ({
+            loading: false,
+            users: state.users.map((user) =>
+                user.id === userId
+                    ? {
+                        ...user,
+                        roles: [...new Set([...user.roles, rol])] // Set para eliminar duplicados automáticamente
+                    }
+                    : user
+            ),
+        }));
+    },
+    // Función para eliminar rol a un usuario
+    onRemoveRolUser: (userId, rol) => {
+        set((state) => ({
+            loading: false,
+            users: state.users.map((user) =>
+                user.id === userId
+                    ? {
+                        ...user,
+                        roles: user.roles.filter((r) => r !== rol), // Elimina el rol de la lista
+                    }
+                    : user
+            ),
+        }));
+    },
 
 }));
 

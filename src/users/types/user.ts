@@ -7,7 +7,7 @@ export interface user {
     nombreDeUsuario: string;
     fechaDeNacimiento: string;
     fechaDeRegistro: string;
-    roles: [string];
+    roles: string[];
     telefono: string;
     activo: boolean;
     email: string;
@@ -20,4 +20,9 @@ interface UserStoreState {
 
     // Métodos para manipular el estado
     onLoading: () => void;
+}
+
+export interface Rol {
+    id: string
+    rol: string;
 }

@@ -6,7 +6,7 @@ import "../../styles/sideBar.css";
 
 const token = Astro.cookies.get("access_token")?.value ?? "";
 const responseToken = await verifyAuth(token);
-const roles = responseToken?.payload?.roles?.toLowerCase();
+const roles = responseToken?.payload?.roles;
 ---
 
 <button
@@ -82,10 +82,10 @@ const roles = responseToken?.payload?.roles?.toLowerCase();
             <SideBarItemMenu title="Panel de control">
                 <i class="fa-solid fa-gears fa-lg" slot="li-icon"></i>
                 {
-                    roles == "sys_adm" && (
+                    roles.includes("sys_adm", "administrador") && (
                         <SideBarItem
                             title="Administracion de usuarios"
-                            ref={"/AdminUsersPage"}
+                            ref={"/UsersAdministration"}
                             slot="li-item"
                         >
                             <i
@@ -98,7 +98,7 @@ const roles = responseToken?.payload?.roles?.toLowerCase();
 
                 <SideBarItem
                     title="Categorias"
-                    ref={"/CategoriesPage"}
+                    ref={"/Categories"}
                     slot="li-item"
                 >
                     <i class="fa-solid fa-list fa-lg" slot="after-title"></i>
@@ -121,7 +121,7 @@ const roles = responseToken?.payload?.roles?.toLowerCase();
                 ></i>
             </SideBarItem> -->
 
-            <SideBarItem title="Sign out" ref="/LoginPage" id="signOut">
+            <SideBarItem title="Sign out" ref="/SignIn" id="signOut">
                 <i
                     class="fa-solid fa-arrow-right-to-bracket fa-lg fa-rotate-180"
                     slot="after-title"></i>

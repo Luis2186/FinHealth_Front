@@ -6,12 +6,16 @@ import useUserStore from '../store/useUserStore';
 
 export const useUser = () => {
 
-const {users,loading,errorMessage,onLoading,onError, onGetAllUsers, onRegister, onRemoveUser , onUpdateUser } = useUserStore();
+const {users,loading,errorMessage,onLoading,onError, onGetAllUsers, onRegister, onRemoveUser , onUpdateUser,
+    onRemoveRolUser, onAddRolUser
+ } = useUserStore();
 
 
 const handleUpdate = async (idUser, userUpdate) => {
     try {
         onLoading();
+        if (userUpdate.activo === 'false') userUpdate.activo = false;
+        if (userUpdate.activo === 'true') userUpdate.activo = true;
 
         const user= await updateUserApi(idUser,userUpdate);
         onUpdateUser(user.id,user)
@@ -51,6 +55,34 @@ const handleRemoveUser = async (userId) => {
     } 
 }
 
+const handleAddRolUser = async (idUsuario,idRol,nombreRol) => {
+    try {
+        if(!idUsuario && (!idRol && !nombreRol)) return
+        onLoading();
+        const response = await addRol(idUsuario, "", nombreRol)
+
+        onAddRolUser(idUsuario,nombreRol)
+    } catch (error) {
+        onError( error ); 
+    } 
+}
+
+const handleRemoveRolUser = async (idUsuario,idRol,nombreRol) => {
+    try {
+        if(!idUsuario && (!idRol && !nombreRol)) return
+
+        onLoading();
+
+        const response =  await RemoveRol(idUsuario, "", nombreRol)
+
+        onRemoveRolUser(idUsuario,nombreRol)
+
+    } catch (error) {
+        onError( error ); 
+    } 
+}
+
+
 
 
 return {
@@ -61,5 +93,7 @@ return {
     handleUpdate,
     handleGetAllUsers,
     handleRemoveUser,
+    handleAddRolUser,
+    handleRemoveRolUser
   };
 }
