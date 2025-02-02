@@ -7,6 +7,7 @@ import "../../styles/sideBar.css";
 const token = Astro.cookies.get("access_token")?.value ?? "";
 const responseToken = await verifyAuth(token);
 const roles = responseToken?.payload?.roles;
+console.log(roles);
 ---
 
 <button
@@ -79,21 +80,26 @@ const roles = responseToken?.payload?.roles;
         </div>
 
         <ul class="space-y-2 font-medium mt-16">
+            <SideBarItem title="Home" ref="/Home">
+                <i class="fa-solid fa-house fa-lg" slot="after-title"></i>
+            </SideBarItem>
+
             <SideBarItemMenu title="Panel de control">
                 <i class="fa-solid fa-gears fa-lg" slot="li-icon"></i>
                 {
-                    roles.includes("sys_adm", "administrador") && (
-                        <SideBarItem
-                            title="Administracion de usuarios"
-                            ref={"/UsersAdministration"}
-                            slot="li-item"
-                        >
-                            <i
-                                class="fa-solid fa-users fa-lg"
-                                slot="after-title"
-                            />
-                        </SideBarItem>
-                    )
+                    roles.includes("sys_adm") ||
+                        (roles.includes("administrador") && (
+                            <SideBarItem
+                                title="Administracion de usuarios"
+                                ref={"/UsersAdministration"}
+                                slot="li-item"
+                            >
+                                <i
+                                    class="fa-solid fa-users fa-lg"
+                                    slot="after-title"
+                                />
+                            </SideBarItem>
+                        ))
                 }
 
                 <SideBarItem
@@ -140,7 +146,7 @@ const roles = responseToken?.payload?.roles;
             event.preventDefault();
             try {
                 const response = await logout();
-                if (response.status == 200) window.location.href = "/LoginPage";
+                if (response.status == 200) window.location.href = "/SignIn";
             } catch (error) {
                 console.error("Error al eliminar la cookie:", error);
             }

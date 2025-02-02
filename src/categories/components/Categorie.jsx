@@ -46,7 +46,7 @@ export const Categorie = () => {
 
   return (
     <>
-        <div className='w-full h-auto flex flex-row gap-5 justify-center items-center p-3 mb-10'>
+        <div className='w-full h-auto flex flex-row gap-5 justify-center items-center p-3 my-5 mb-10'>
             {categories.map (categorie => (
                 <button key={categorie.id} className='flex align-middle place-items-center gap-1 px-3 py-1 text-white dark:text-dark_text
                 bg-light_main/60 rounded-xl hover:bg-light_hover focus:bg-light_focus active:bg-light_active focus:outline-none focus:ring focus:ring-light_focus/10
@@ -62,7 +62,7 @@ export const Categorie = () => {
         {currentCategorie && (
 
             <div className='flex w-full justify-center '>
-                <SubCategories subCategories={currentCategorie.subCategorias}/>
+                <SubCategories categoriaId={currentCategorie.id} familiaId={3}/>
             </div>
         )}
     </>

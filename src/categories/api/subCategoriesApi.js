@@ -2,9 +2,10 @@ import axiosInstance from "../../api/axiosConfig";
 
 const endpoint= "/subcategoria"
 
-export const getAllSubCategories = (subCategorieRequest) => {
+export const getAllSubCategories = async (familyId,categorieId) => {
     try {
-        const response = axiosInstance.get(`${endpoint}/todas`,subCategorieRequest)
+        console.log(familyId,categorieId)
+        const response = await axiosInstance.get(`${endpoint}/todas/${familyId}/${categorieId}`)
         return response;
     } catch (error) {
         throw error.response ? error.response.data : error.message;

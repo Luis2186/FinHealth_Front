@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import type { subCategorieStore, subCategorie } from '../types/categoriesTypes';
 
 
-export const useCategorieStore = create<subCategorieStore>((set) => ({
+export const useSubCategorieStore = create<subCategorieStore>((set) => ({
     subCategories: [],
     loading: false,
     errorMessage: undefined,

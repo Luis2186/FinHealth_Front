@@ -46,10 +46,10 @@ const tokenValido = await tokenValid(token);
     <body>
         {
             tokenValido ? (
-                <div id="app" class="dark:bg-d-main-background bg-l-main-background">
+                <div id="app" class="dark:bg-d-main-background bg-l-main-background  h-full">
                   
                     <SideBar/>
-                    <div class="[grid-area:main] ">
+                    <div class="[grid-area:main] h-full ">
                         <slot />
                     </div>
                 </div>

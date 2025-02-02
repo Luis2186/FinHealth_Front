@@ -5,11 +5,13 @@ import https from 'https';
 
 const rutasPermitidasAdministrador = [
     "/UsersAdministration",
-    "/CategoriesPage",
+    "/Categories",
+    "/Home",
 ];
 
 const routesUsers = [
     "/UsersAdministration",
+    "/Home",
 ];
 
 const routesWithoutAuthentication  = [
