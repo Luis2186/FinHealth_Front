@@ -19,7 +19,7 @@ export const GroupCreate = () => {
     });
 
     const [checkedValue, setCheckedValue] = useState(false);
-    const { isAuthenticated, user, errorMessage, haveGroup } = useAuthStore();
+
 
     // Función para manejar el cambio de estado del checkbox
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

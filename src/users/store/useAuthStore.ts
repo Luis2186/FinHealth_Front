@@ -34,7 +34,7 @@ const useAuthStore = create<UseAuthStore>()(persist(
         onChecking: () => set({ status: 'checking', user: null, isAuthenticated: false, errorMessage: undefined }),
 
         // Función para manejar login
-        onLogin: (user: user) => set({ status: 'authenticated', user, isAuthenticated: true, errorMessage: undefined, haveGroup: user?.grupoDeGastos?.length > 0 }),
+        onLogin: (user: user) => set({ status: 'authenticated', user, isAuthenticated: true, errorMessage: undefined }),
 
         // Función para manejar logout
         onLogout: (errorMessage: errorMessage) => set({ status: 'not-authenticated', user: null, isAuthenticated: false, errorMessage }),
@@ -48,7 +48,7 @@ const useAuthStore = create<UseAuthStore>()(persist(
             if (!token) {
                 // Opcional: Agrega lógica para validar el token
                 const user = JSON.parse(localStorage.getItem('user') || 'null');
-                set({ user, isAuthenticated: true, status: 'authenticated', haveGroup: user?.grupoDeGastos?.length > 0 });
+                set({ user, isAuthenticated: true, status: 'authenticated', haveGroup: user.grupoDeGastos });
             } else {
                 set({ isAuthenticated: false, status: 'not-authenticated' });
             }

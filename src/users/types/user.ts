@@ -1,16 +1,17 @@
 
 export interface user {
     id: string
+    nombreDeUsuario: string;
     nombre: string;
     apellido: string;
     edad: number;
-    nombreDeUsuario: string;
+    email: string;
+    telefono: string;
     fechaDeNacimiento: string;
     fechaDeRegistro: string;
     roles: string[];
-    telefono: string;
     activo: boolean;
-    email: string;
+    grupoDeGastos: GrupoDeGastos[]
 }
 
 interface UserStoreState {
@@ -20,6 +21,14 @@ interface UserStoreState {
 
     // Métodos para manipular el estado
     onLoading: () => void;
+}
+
+export interface GrupoDeGastos {
+    id: string
+    nombre: string;
+    descripcion: string;
+    fechaDeCreacion: string;
+    usuarioAdministradorId: string;
 }
 
 export interface Rol {
