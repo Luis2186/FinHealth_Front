@@ -48,7 +48,7 @@ const middleware = async (context, next) => {
         const roles = validationResult?.payload.roles;
         const esRutaDeAdministrador = rutasPermitidasAdministrador?.some(ruta => context.request.url.includes(ruta));
 
-        if( esRutaDeAdministrador && !roles.includes("sys_adm") && !roles.includes("administrador")) return Response.redirect(new URL("/SignIn", context.url), 302);
+        //if( esRutaDeAdministrador && !roles.includes("sys_adm") && !roles.includes("administrador")) return Response.redirect(new URL("/SignIn", context.url), 302);
 
         if (validationResult) {
            

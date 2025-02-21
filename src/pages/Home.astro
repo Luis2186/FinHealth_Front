@@ -1,33 +1,33 @@
 ---
 import { Categorie } from "../categories/components/Categorie";
 import Layout from "../layouts/Layout.astro";
-import { FamilyCreate } from "../family/components/FamilyCreate";
+import { GroupCreate } from "../family/components/GroupCreate";
+import { GroupHome } from "../family/components/GroupHome";
 ---
 
 <Layout title="Home">
-    <div class="container flex-col w-full h-full m-auto">
+    <!-- <div class="container flex-col w-full h-full m-auto">
         <div class="grid grid-cols-4 grid-rows-12 gap-4 h-full py-5">
             <div class="col-span-4 row-span-2 flex items-center p-2">
                 <h2
                     class="text-light_main dark:text-dark_title text-3xl tracking-wide"
                 >
-                    ¡Cree un nuevo grupo familiar
+                    ¡Cree un nuevo grupo
                     <span class="text-light_hover text-3xl">
                         o unase a uno!</span
                     >
                 </h2>
-            </div>
+            </div> -->
 
-            <div class="col-span-4 row-span-10 flex justify-center mt-10">
-                <FamilyCreate client:load />
-            </div>
-        </div>
-        <!-- <Home client:load /> -->
-        <!-- 
+    <!-- <div class="col-span-4 row-span-10 flex justify-center mt-10"> -->
+    <GroupHome client:load />
+    <!-- </div> -->
+    <!-- </div> -->
+    <!-- <Home client:load /> -->
+    <!-- 
         <div class="container flex">
             <section class="w-6/12">
                 <h2>Familia</h2>
             </section>
         </div> -->
-    </div>
 </Layout>

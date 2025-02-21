@@ -23,8 +23,9 @@ export const Login = () => {
     // Función que maneja el envío del formulario
     const onSubmit = async (data: IFormInput) => {
         await handleLogin(data.email, data.password)
-    };
 
+    };
+    console.log(user)
     return (
         <div className="flex w-full h-[calc(100vh-72px)] justify-center items-center">
             <div className="h-3/5  w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-indigo-950 dark:border-white-700">
@@ -41,7 +42,7 @@ export const Login = () => {
                             type="email"
                             id="email"
                             //value="l.lopezperdomo.e@gmail.com"
-                            value="lilp_ya@hotmail.com"
+                            value="juan@hotmail.com"
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-indigo-600 dark:border-gray-500 dark:placeholder-indigo-100 dark:text-white"
                             placeholder="nombre@compania.com"
                             {...register('email')}

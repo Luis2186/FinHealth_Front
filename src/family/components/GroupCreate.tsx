@@ -1,23 +1,26 @@
 import { useForm } from "react-hook-form";
 import { InputForm } from "../../components/Modals/Form/InputForm"
 import { useState } from "react";
+import useAuthStore from "../../users/store/useAuthStore";
 
-interface createFamily {
+interface createGroup {
+    nombre: string;
+    descripcion: string;
     usuarioAdministradorId: string;
     codigoAcceso: string;
-    apellido: string;
-    descripcion: string;
     activo: boolean;
     codigo?: boolean;
 }
 
-export const FamilyCreate = () => {
+export const GroupCreate = () => {
     // Usa useForm con tipos explícitos
-    const { register, handleSubmit, formState: { errors } } = useForm<createFamily>({
+    const { register, handleSubmit, formState: { errors } } = useForm<createGroup>({
         // resolver: zodResolver(schemaRegister),  // Usamos el resolver de Zod con el esquema importado
     });
 
     const [checkedValue, setCheckedValue] = useState(false);
+    const { isAuthenticated, user, errorMessage, haveGroup } = useAuthStore();
+
     // Función para manejar el cambio de estado del checkbox
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCheckedValue(event.target.checked); // Actualizamos el estado con el nuevo valor
@@ -46,7 +49,7 @@ export const FamilyCreate = () => {
             <h2
                 className="text-light_main dark:text-dark_title text-3xl tracking-wide w-full flex justify-center h-10"
             >
-                Crear familia
+                Crear grupo
             </h2>
 
             <div className="h-2/4 w-3/6 mx-auto my-10 p-4 border border-light_active rounded-lg shadow sm:p-6 md:p-8 bg-primary-50 bg-opacity-40 
@@ -68,8 +71,8 @@ export const FamilyCreate = () => {
 
                     {
                         !checkedValue ? <>
-                            <InputForm type="text" name='apellido' label='Nombre familia' register={register} errors={errors.apellido} />
-                            <InputForm type="email" name='descripcion' label='Descripcion' errors={errors.descripcion} register={register} />
+                            <InputForm type="text" name='nombre' label='Nombre grupo' register={register} errors={errors.nombre} />
+                            <InputForm type="text" name='descripcion' label='Descripcion' errors={errors.descripcion} register={register} />
                         </>
                             :
                             <InputForm type="text" name='codigoAcceso' label='Codigo de accesso' register={register} errors={errors.codigoAcceso} />

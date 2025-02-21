@@ -8,6 +8,7 @@ interface UseAuthStore {
     status: string; // Lista de usuarios
     user: user | null; // Indica si la tienda está en estado de carga
     isAuthenticated: boolean,
+    haveGroup: boolean,
     errorMessage?: errorMessage; // Mensaje de error, opcional
 
     // Métodos para manipular el estado
@@ -26,13 +27,14 @@ const useAuthStore = create<UseAuthStore>()(persist(
         status: 'checking', // 'checking' / 'authenticated' / 'not-authenticated'
         user: null,
         isAuthenticated: false,
+        haveGroup: false,
         errorMessage: undefined,
 
         // Función para establecer el estado de checking
         onChecking: () => set({ status: 'checking', user: null, isAuthenticated: false, errorMessage: undefined }),
 
         // Función para manejar login
-        onLogin: (user: user) => set({ status: 'authenticated', user, isAuthenticated: true, errorMessage: undefined }),
+        onLogin: (user: user) => set({ status: 'authenticated', user, isAuthenticated: true, errorMessage: undefined, haveGroup: user?.grupoDeGastos?.length > 0 }),
 
         // Función para manejar logout
         onLogout: (errorMessage: errorMessage) => set({ status: 'not-authenticated', user: null, isAuthenticated: false, errorMessage }),
@@ -46,7 +48,7 @@ const useAuthStore = create<UseAuthStore>()(persist(
             if (!token) {
                 // Opcional: Agrega lógica para validar el token
                 const user = JSON.parse(localStorage.getItem('user') || 'null');
-                set({ user, isAuthenticated: true, status: 'authenticated' });
+                set({ user, isAuthenticated: true, status: 'authenticated', haveGroup: user?.grupoDeGastos?.length > 0 });
             } else {
                 set({ isAuthenticated: false, status: 'not-authenticated' });
             }
